@@ -1,0 +1,47 @@
+@import 'reset';
+:root {
+  --background: linear-gradient(
+    45deg,
+    #f09433,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888
+  );
+}
+body {
+  //font-size: 20px;
+  background: var(--background);
+  height: 100vh;
+}
+
+input {
+  width: 400px;
+  height: 40px;
+  font-size: 20px;
+  padding: 5px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  width: 400px;
+  //display: flex;
+  //flex-direction: column;
+}
+.list_item {
+  color: gray;
+  list-style: none;
+  background: white;
+  padding: 5px;
+  width: 400px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 5px;
+  font-size: 20px;
+  &:hover {
+    background: #ccc;
+    cursor: pointer;
+  }
+}
