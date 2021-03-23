@@ -10,7 +10,7 @@ let config = {};
 
 config.mode = 'production';
 
-config.entry = { main: './src/scripts/app.js' };
+config.entry = { main: './src/scripts/index.js' };
 
 config.output = {
   filename: '[name].[contenthash].js',
@@ -60,7 +60,15 @@ config.module = {
       use: {
         loader: 'babel-loader',
         options: {
-          presets: ['@babel/preset-env'],
+          presets: [
+            [
+              '@babel/preset-env',
+              {
+                useBuiltIns: 'usage',
+                corejs: 3,
+              },
+            ],
+          ],
         },
       },
     },

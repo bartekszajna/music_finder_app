@@ -6,7 +6,7 @@ const config = {};
 
 config.mode = 'development';
 
-config.entry = { main: './src/scripts/app.js' };
+config.entry = { main: './src/scripts/index.js' };
 
 config.output = {
   filename: '[name].bundle.js',
