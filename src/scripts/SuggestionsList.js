@@ -1,6 +1,6 @@
 export default class SuggestionsList {
   constructor() {
-    this.suggestionsListElement = document.querySelector('ul');
+    this.suggestionsListElement = document.querySelector('.search_list');
 
     this.suggestionsListElement.addEventListener(
       'keydown',

@@ -101,21 +101,49 @@ export default class UIController {
     let arrayOfPromises = await this.loadAllImages();
     //console.log(arrayOfPromises);
     arrayOfPromises.forEach((promise) => {
-      let wrapperElement = document.createElement('div');
-      let typeParagraph = document.createElement('p');
-      typeParagraph.innerText = `${promise.value.item.type}`;
-      let nameParagraph = document.createElement('p');
-      nameParagraph.innerText = `${promise.value.item.name}`;
-      let moreInfoButton = document.createElement('button');
-      moreInfoButton.innerText = 'More info';
-      moreInfoButton.dataset.item = JSON.stringify(promise.value.item);
+      let item = document.createElement('div');
+      item.className = 'item';
 
-      wrapperElement.className = 'wrapperElement';
-      wrapperElement.append(promise.value.imageElement);
-      wrapperElement.append(typeParagraph);
-      wrapperElement.append(moreInfoButton);
-      wrapperElement.append(nameParagraph);
-      this.container.append(wrapperElement);
+      let itemImage = promise.value.imageElement;
+      itemImage.classList = 'item_image';
+
+      let itemData = document.createElement('div');
+      itemData.className = 'item_data';
+
+      let itemTitle = document.createElement('p');
+      itemTitle.className = 'item_title';
+      itemTitle.innerText = `${promise.value.item.type}`;
+
+      let itemSubtitle = document.createElement('p');
+      itemSubtitle.className = 'item_subtitle';
+      itemSubtitle.innerText = `${promise.value.item.name}`;
+
+      let itemButtons = document.createElement('div');
+      itemButtons.className = 'item_buttons';
+
+      let itemButtonInfo = document.createElement('button');
+      itemButtonInfo.className = 'item_button--info';
+      itemButtonInfo.innerText = 'More info';
+      itemButtonInfo.dataset.item = JSON.stringify(promise.value.item);
+
+      let itemButtonLike = document.createElement('button');
+      itemButtonLike.className = 'item_button--like';
+      itemButtonLike.innerHTML = '<span hidden>Add to favourites</span>';
+
+      itemData.append(itemTitle);
+      itemData.append(itemSubtitle);
+
+      itemButtons.append(itemButtonInfo);
+      itemButtons.append(itemButtonLike);
+
+      itemData.append(itemButtons);
+
+      this.container.append(item);
+
+      item.append(itemImage);
+      item.append(itemData);
+
+      this.container.append(item);
     });
     this.container.classList.add('container--visible');
     this.container.addEventListener('click', this.renderModal.bind(this));

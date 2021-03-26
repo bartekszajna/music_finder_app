@@ -5,8 +5,8 @@ const container = document.querySelector('.container');
 export default class SearchController {
   constructor() {
     this.previousInputValue = '';
-    this.formSearchElement = document.querySelector('form');
-    this.inputSearchElement = document.querySelector('input');
+    this.formSearchElement = document.querySelector('.header_search');
+    this.inputSearchElement = document.querySelector('.search_input');
     this.fetchAddress = 'https://warm-temple-70787.herokuapp.com/search?q=';
 
     this.inputSearchElement.addEventListener(
@@ -26,8 +26,8 @@ export default class SearchController {
 
   async submissionHandler(e) {
     e.preventDefault();
-
-    let inputValue = e.target.firstElementChild.value.trim();
+    console.dir(e.target);
+    let inputValue = e.target[0].value.trim();
 
     // to make sure we do not make unnecessary repeated API calls
     // for the exact same data

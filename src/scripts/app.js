@@ -41,7 +41,7 @@ export default class App {
     function blurHandler(e) {
       if (
         e.target !== document.querySelector('.container') &&
-        !e.target.contains(document.querySelector('nav'))
+        !e.target.contains(document.querySelector('.header'))
       ) {
         return;
       } else {
