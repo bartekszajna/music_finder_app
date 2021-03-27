@@ -1,53 +1,28 @@
-# Webpack 4 project template
+# Music Finder App
 
-### Very simple and basic ready-to-start project template. Based on Webpack 4 bundler, processes SCSS and JS files, minifies them, bundles and spites out to ./dist directory as ready for deploying. For more information and extensive documentation please visit https://webpack.js.org/.
+(<span style="color: red; font-weight: 700">Note: </span>project in progress - no available live website to test it yet)
+<br>
 
-**Includes:**
+<p align="center">
+  <img src="https://raw.githubusercontent.com/bartekszajna/music_finder_app_design/master/design/mobile_views/light_mode.jpg" width="30%"/>
+  <img src="https://raw.githubusercontent.com/bartekszajna/music_finder_app_design/master/design/mobile_views/dark_mode.jpg" width="30%"/>
+  <img src="https://raw.githubusercontent.com/bartekszajna/music_finder_app_design/master/design/mobile_views/light_mode_info_modal.jpg" width="30%"/>
+</p>
 
-- scss/sass -> css compilation
-- styles minification
-- sourcemaps
-- using ./src/template.html as a source for dynamicly created markdown in ./dist
-- renaming (includes cache-busting)
-- autoprefixers (with postcss-loader)
-- scripts minification and transpiling through babel (preset-env)
-- dynamic style.css inject to DOM
-- bundling styles, scripts and images together
-- images minification (albeit using web tools like (tinypng.com) is highly recommended and works much better)
-- local server and automated live-reload thanks to webpack-dev-server
+### Client-side code of SPA served by Express.js, using Spotify API to asynchronously fetch data and browse through your favourite music. Authorization handled with OAuth framework based on Client Credentials Flow. With [Figma design version](https://github.com/bartekszajna/music_finder_app_design) of the app together those repos make up a front-end part of project.
 
-Inside of the project you will encounter two separate webpack config files - one serves as a development config and the other as a building one. Their names are optional, you only need to include them with `--config` flag in npm scripts to tell webpack which configuration file should it use. I found it pretty sufficient for my current needs but to keep up with DRY method you probably should separate mutual pieces to a third file (i.e. webpack.common.js) and it is possible by webpack-merge package.
+#
 
-In `src/styles` you'll find \_reset.scss - it is .scss file created
-by Eric A. Meyer (meyerweb.com) and resets all default browser problematic styles like padding, margin, box-sizing.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/bartekszajna/music_finder_app_design/master/design/desktop_views/dark_mode_info_modal.jpg" width="80%" />
+</p>
 
-In `src/assets` you'll find .jpg file used during configuration to check if images minification and injecting works.
-Source/author: Photo by Michael Dam on Unsplash
+## Features:
 
-    To start project, node.js & npm are required. You can download these from node website. Follow instructions.
-
-`npm init -y`
-Initiates npm management over your project. Creates package.json. `-y` sets all properties to default values. You can change them manually at any time by modifying package.json file.
-
-`npm install / npm i`
-This commands (either) should install all required dependencies listed in package.json file. Therefore node_modules directory is created.
-
-`npm run start` one time script to create ./dist directory with readable scripts (difference lies in webpack-dev-server which works "in memory" so doesn't create that folder until you specifically build it)
-
-`npm run dev` npm script for development process, opens local server (port 8000), opens your index.html and keeps looking for changes in project files. Enter command and work without interruptions for hours :) Webpack server - unlike tools like Gulp - can manage repetitive development tasks straight in the memory -> faster dev process, but be aware that it won't create ./dist folder on itself - you need to build app at the end
-
-`npm run build` building script, not for repetitive evoke. Bundles all files, separates styles to external file, minifies scripts, injects style and script tags to markdown head, spites out ready for deployment ./dist folder
-
-`./src`
-Directory for all source subdirectories (styles, scripts, template.html and assets)
-
-`./src/styles`
-Source style files
-
-`./src/scripts`
-Source script files
-
-`./dist`
-Steady production directory for styles, images, html and scripts
-
-PS. be aware of package.json file and data (author, project name, etc). Feel free to change it and use in your projects.
+- powered by Spotify API
+- dynamically browsing through REST API and displays given resources on screen immediately
+- no requirements for user login and authentication
+- endpoints access based on client credentials access token, see their documentation and [Guide](https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow)
+- light/dark mode switch
+- user's favourite list of liked items (stored on client side inside of Local Storage)
+- pagination of fetched data and loading more on scroll

@@ -1,0 +1,90 @@
+// styling related to single item element visible on the screen after form submission
+
+.item {
+  width: 100%;
+  padding: 1rem 1.5rem 1rem 1rem;
+  height: 10.5rem;
+  background: white;
+  border-radius: 2rem;
+  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.item_image {
+  width: 8.5rem;
+  height: auto;
+  border-bottom-left-radius: 1rem;
+  border-top-left-radius: 1rem;
+  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.15);
+}
+
+.item_data {
+  display: flex;
+  margin-left: 1.5rem;
+  width: 100%;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item_title {
+  font-size: 1.6rem;
+  color: #00276d;
+  font-weight: 700;
+  margin: 0.3rem 0;
+}
+
+.item_subtitle {
+  color: rgba(0, 0, 0, 0.5);
+  flex-grow: 1;
+  font-size: 1.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item_buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item_button--info {
+  background: none;
+  outline: none;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 1.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 2rem;
+  color: rgba(0, 0, 0, 0.4);
+  padding: 0.2rem 1.4rem;
+  transform-origin: left bottom;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: #d94271;
+    border-color: #d94271;
+  }
+}
+
+.item_button--like {
+  background: none;
+  font-family: 'Roboto Condensed', sans-serif;
+  background-repeat: no-repeat;
+  background-position: top;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  outline: none;
+  background-image: url(../assets/heart_icons_light.svg);
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-position: center;
+  }
+}
