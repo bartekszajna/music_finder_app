@@ -1,5 +1,7 @@
 export default class SuggestionsList {
   constructor() {
+    this.inputSearchElement;
+    this.formSearchElement;
     this.suggestionsListElement = document.querySelector('.search_list');
 
     this.suggestionsListElement.addEventListener(

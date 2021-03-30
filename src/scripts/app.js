@@ -22,16 +22,20 @@ export default class App {
     searchController.prepareItems = uiController.prepareItems.bind(
       uiController
     );
-    searchController.renderList = uiController.renderList.bind(uiController);
+    searchController.renderItemsList = uiController.renderItemsList.bind(
+      uiController
+    );
 
     suggestionsList.formSearchElement = searchController.formSearchElement;
     suggestionsList.inputSearchElement = searchController.inputSearchElement;
 
     searchController.suggestionsListElement =
       suggestionsList.suggestionsListElement;
-    searchController.renderListFunction = suggestionsList.render.bind(
+    searchController.renderSuggestionsList = suggestionsList.render.bind(
       suggestionsList
     );
+
+    uiController.searchController = searchController;
 
     this.addBodyClickListener(searchController);
     this.preventWindowArrowScroll();
@@ -62,5 +66,24 @@ export default class App {
       }
     }
     window.addEventListener('keydown', disableArrowScroll);
+  }
+
+  static addBodyScrollListener(searchController) {
+    let options = {
+      root: null,
+      rootMargin: '100px',
+    };
+
+    function fireOnScroll(entry) {
+      if (entry[0].isIntersecting) {
+        let event = new Event('submit', { cancelable: true });
+        event.loadOnScroll = true;
+        searchController.formSearchElement.dispatchEvent(event);
+      }
+    }
+
+    let observer = new IntersectionObserver(fireOnScroll, options);
+    let target = document.body.querySelector('.container').lastElementChild;
+    observer.observe(target);
   }
 }

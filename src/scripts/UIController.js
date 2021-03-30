@@ -1,17 +1,22 @@
 import AlbumItem from './AlbumItem';
 import ArtistItem from './ArtistItem';
 import TrackItem from './TrackItem';
+import App from './App';
 //import DefaultImage from '../assets/default_image.svg';
 
 export default class UIController {
   constructor() {
+    this.searchController;
     this.listOfItems;
     this.container = document.querySelector('.container');
   }
   prepareItems(data) {
     const listOfItems = [];
+    let totalItemsAmount = 0;
 
     for (const group of Object.keys(data)) {
+      totalItemsAmount += data[group].total;
+
       data[group].items.forEach((item) => {
         let obj;
         switch (group) {
@@ -64,7 +69,7 @@ export default class UIController {
       });
     }
     this.listOfItems = listOfItems;
-    console.log(this.listOfItems);
+    return totalItemsAmount;
   }
 
   async loadAllImages() {
@@ -97,9 +102,17 @@ export default class UIController {
     });
   }
 
-  async renderList() {
+  async renderItemsList(totalItemsAmount, fetchedDataOffset) {
+    if (totalItemsAmount === 0) {
+      this.container.insertAdjacentHTML(
+        'beforeEnd',
+        `<p class="amount_header">No results available</p>`
+      );
+      return;
+    }
+
     let arrayOfPromises = await this.loadAllImages();
-    //console.log(arrayOfPromises);
+
     arrayOfPromises.forEach((promise) => {
       let item = document.createElement('div');
       item.className = 'item';
@@ -138,14 +151,22 @@ export default class UIController {
 
       itemData.append(itemButtons);
 
-      this.container.append(item);
-
       item.append(itemImage);
       item.append(itemData);
 
       this.container.append(item);
     });
+
+    if (fetchedDataOffset === 0) {
+      this.container.insertAdjacentHTML(
+        'afterBegin',
+        `<p class="amount_header">${totalItemsAmount} total results</p>`
+      );
+    }
+
     this.container.classList.add('container--visible');
+    //App.addBodyScrollListener(this.searchController);
+
     this.container.addEventListener('click', this.renderModal.bind(this));
   }
 
