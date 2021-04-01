@@ -25,6 +25,7 @@ export default class App {
     searchController.renderItemsList = uiController.renderItemsList.bind(
       uiController
     );
+    searchController.uiController = uiController;
 
     suggestionsList.formSearchElement = searchController.formSearchElement;
     suggestionsList.inputSearchElement = searchController.inputSearchElement;
@@ -36,6 +37,8 @@ export default class App {
     );
 
     uiController.searchController = searchController;
+    uiController.suggestionsListElement =
+      suggestionsList.suggestionsListElement;
 
     this.addBodyClickListener(searchController);
     this.preventWindowArrowScroll();
@@ -79,11 +82,13 @@ export default class App {
         let event = new Event('submit', { cancelable: true });
         event.loadOnScroll = true;
         searchController.formSearchElement.dispatchEvent(event);
+        console.log('XD');
       }
     }
 
     let observer = new IntersectionObserver(fireOnScroll, options);
     let target = document.body.querySelector('.container').lastElementChild;
     observer.observe(target);
+    return observer;
   }
 }

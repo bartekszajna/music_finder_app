@@ -28,6 +28,7 @@ export default class SearchController {
   }
 
   async submissionHandler(e) {
+    console.log(this.fetchedDataOffset);
     e.preventDefault();
     let inputValue = e.target[0].value.trim();
     // to make sure we do not make unnecessary repeated API calls
@@ -39,16 +40,21 @@ export default class SearchController {
     // what exact submission type was made
     // without that we wouldn't be able to get through below if statements because
     // in fact, our input value didn't change
+    if (this.previousInputValue.trim() !== inputValue) {
+      this.fetchedDataOffset = 0;
+    }
+
     if (
       !e.loadOnScroll &&
       (this.previousInputValue.trim() === inputValue || !inputValue)
     ) {
       return;
     }
+
     if (this.fetchedDataOffset === 0) {
       document.querySelector('.container').innerHTML = '';
     }
-
+    console.log('fetching');
     this.previousInputValue = inputValue;
 
     this.suggestionsListElement.innerText = '';

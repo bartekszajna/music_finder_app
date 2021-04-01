@@ -6,9 +6,13 @@ import App from './App';
 
 export default class UIController {
   constructor() {
+    this.intersectionObserverObject;
     this.searchController;
+    this.suggestionsListElement;
     this.listOfItems;
     this.container = document.querySelector('.container');
+
+    this.container.addEventListener('click', this.renderModal.bind(this));
   }
   prepareItems(data) {
     const listOfItems = [];
@@ -22,7 +26,8 @@ export default class UIController {
         switch (group) {
           case 'albums': {
             obj = new AlbumItem(
-              item.type,
+              //item.type,
+              'Album',
               item.name,
               item.id,
               item.external_urls.spotify,
@@ -36,7 +41,8 @@ export default class UIController {
           }
           case 'artists': {
             obj = new ArtistItem(
-              item.type,
+              //item.type,
+              'Artist',
               item.name,
               item.id,
               item.external_urls.spotify,
@@ -49,7 +55,8 @@ export default class UIController {
           }
           case 'tracks': {
             obj = new TrackItem(
-              item.type,
+              //item.type,
+              'Song',
               item.name,
               item.id,
               item.external_urls.spotify,
@@ -65,10 +72,24 @@ export default class UIController {
             break;
           }
         }
+        // here we switch the position of albums and artists so the latter come first
+        // default order would be to albums go first
+        // if (obj.type === 'Artist') {
+        //   listOfItems.unshift(obj);
+        // } else {
+        //   listOfItems.push(obj);
+        // }
+
         listOfItems.push(obj);
       });
     }
+    listOfItems.sort((a, b) => {
+      if (a.popularity < b.popularity) return 1;
+      if (a.type === 'Artist') return -1;
+      if (b.type === 'Artist') return 1;
+    });
     this.listOfItems = listOfItems;
+    console.log(this.listOfItems);
     return totalItemsAmount;
   }
 
@@ -111,6 +132,13 @@ export default class UIController {
       return;
     }
 
+    if (!this.listOfItems.length) {
+      if (this.intersectionObserverObject instanceof IntersectionObserver) {
+        this.intersectionObserverObject.disconnect();
+      }
+      return;
+    }
+
     let arrayOfPromises = await this.loadAllImages();
 
     arrayOfPromises.forEach((promise) => {
@@ -141,7 +169,8 @@ export default class UIController {
 
       let itemButtonLike = document.createElement('button');
       itemButtonLike.className = 'item_button--like';
-      itemButtonLike.innerHTML = '<span hidden>Add to favourites</span>';
+      itemButtonLike.innerHTML =
+        '<span class="sr-only">Add to favourites</span>';
 
       itemData.append(itemTitle);
       itemData.append(itemSubtitle);
@@ -165,28 +194,47 @@ export default class UIController {
     }
 
     this.container.classList.add('container--visible');
-    //App.addBodyScrollListener(this.searchController);
 
-    this.container.addEventListener('click', this.renderModal.bind(this));
+    // they are created every time the renderItemsList is evoked and accumulate unnecessary
+    // which causes more data loading if we scroll through old items back and forth
+    // so we need to disconnect the old observers
+    if (this.intersectionObserverObject instanceof IntersectionObserver) {
+      this.intersectionObserverObject.disconnect();
+    }
+
+    // we hold reference to this object so we can disconnect it above in next calls
+    this.intersectionObserverObject = App.addBodyScrollListener(
+      this.searchController
+    );
+
+    this.suggestionsListElement.innerHTML = '';
+    //this.searchController.inputSearchElement.blur();
+    //this.container.addEventListener('click', this.renderModal.bind(this));
   }
 
   renderModal(e) {
-    console.log(this);
+    console.log(e, this);
+    document
+      .querySelector('.modal_container')
+      .classList.add('modal_container--visible');
+
+    //document.classList.add('modal--opened');
+    document.body.classList.add('modal--opened');
     if (!e.target.dataset.item) {
       return;
     } else {
       let object = JSON.parse(e.target.dataset.item);
       switch (object.type) {
-        case 'album': {
+        case 'Album': {
           this.renderAlbumModal(object);
           break;
         }
-        case 'artist': {
+        case 'Artist': {
           this.renderArtistModal(object);
           break;
         }
-        case 'track': {
-          this.renderTrackModal(object);
+        case 'Song': {
+          this.renderSongModal(object);
           break;
         }
       }
@@ -194,6 +242,14 @@ export default class UIController {
   }
 
   renderAlbumModal(object) {
-    console.log(object.artists);
+    console.log(object.type);
+  }
+
+  renderArtistModal(object) {
+    console.log(object.type);
+  }
+
+  renderSongModal(object) {
+    console.log(object.type);
   }
 }

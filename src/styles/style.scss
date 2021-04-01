@@ -34,6 +34,11 @@ body {
   font-family: 'Roboto Condensed', sans-serif;
 }
 
+.modal--opened {
+  //height: 100vh;
+  overflow-y: hidden;
+}
+
 .sr-only {
   border: 0;
   clip: rect(0, 0, 0, 0);
@@ -298,16 +303,25 @@ body {
 }
 
 .modal_container {
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(0, 0, 0, 0.1);
   display: flex;
-  display: none;
+  transform: scale(0);
+  opacity: 0;
   justify-content: center;
   align-items: center;
+  transition: opacity 0.3es ease-out, transform 0s 0.3s ease-out;
+}
+
+.modal_container--visible {
+  display: flex;
+  transform: scale(1);
+  opacity: 1;
+  transition: opacity 0.3s ease-out, transform 0s 0s ease-out;
 }
 
 // .modal {
@@ -336,19 +350,124 @@ body {
 
 .modal {
   position: relative;
-  width: 400px;
-  height: 500px;
+  width: 27rem;
+  height: 44rem;
   background: white;
+  color: black;
   border-radius: 20px;
-  background-image: url('../assets/modal_background_image.svg'),
-    linear-gradient(
-      to top,
-      rgba(white, 1) 0%,
-      rgba(white, 1) 50%,
-      rgba(white, 0) 100%
-    );
-  background-repeat: no-repeat;
-  background-size: 100%;
-  display: none;
-  background-position: bottom center, center center, top center;
+  overflow: hidden;
+  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.15);
+
+  .modal_data {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.7rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 4.7rem;
+    justify-content: flex-end;
+    background-image: url('../assets/modal_background_image.svg'),
+      linear-gradient(
+        to top,
+        #f3f3f3 0%,
+        #f3f3f3 40%,
+        rgba(#f3f3f3, 0.9) 44%,
+        rgba(#f3f3f3, 0.5) 52%,
+        rgba(#f3f3f3, 0.2) 60%,
+        rgba(#f3f3f3, 0.05) 68%,
+        rgba(#f3f3f3, 0) 100%
+      );
+    background-repeat: no-repeat;
+    background-size: 100%;
+    //display: none;
+    background-position: bottom center, center center, top center;
+
+    .modal_title {
+      color: rgba(0, 0, 0, 0.7);
+      font-weight: 700;
+      font-size: 1.1rem;
+      font-family: 'Roboto Condensed', sans-serif;
+      text-transform: uppercase;
+      width: 30%;
+      padding-top: 0.2rem;
+    }
+    .modal_content {
+      color: #00276d;
+      font-weight: 700;
+      font-size: 1.4rem;
+      line-height: 1.2;
+      font-family: 'Roboto Condensed', sans-serif;
+      width: 65%;
+    }
+  }
+
+  .data_entry {
+    display: flex;
+    margin-bottom: 1rem;
+    justify-content: space-between;
+  }
+
+  .buttons_group {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.7rem 1.7rem;
+  }
+
+  .back_button {
+    background: none;
+    background-image: url(../assets/back_buttons.svg);
+    opacity: 0.4;
+    background-position: top center;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    outline: none;
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  .like_button {
+    background: none;
+    background-image: url(../assets/heart_icons_light.svg);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 2.7rem;
+    height: 2.7rem;
+    border: none;
+    outline: none;
+    &:hover,
+    &:focus,
+    &:active {
+      background-position: center;
+    }
+  }
 }
+
+// .background {
+//   background-color: #e7aa35;
+//   width: 25rem;
+//   height: 2rem;
+//   background: url(../assets/stars_group.png);
+//   background-size: contain;
+//   background-repeat: no-repeat;
+//   .foreground {
+//     width: 46%;
+//     height: 100%;
+//     background: url(../assets/stars_group_filled.png);
+//     background-size: cover;
+//     background-repeat: no-repeat;
+//   }
+// }

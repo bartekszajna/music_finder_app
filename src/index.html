@@ -59,8 +59,11 @@
         <div class="button_group">
           <button type="button" class="header_button button--user">
             <span class="button_quantity">3</span>
+            <span class="sr-only">Your favourite music</span>
           </button>
-          <button type="button" class="header_button button--mode"></button>
+          <button type="button" class="header_button button--mode">
+            <span class="sr-only">Switch to dark mode</span>
+          </button>
         </div>
       </div>
     </header>
@@ -84,9 +87,38 @@
         Load more
       </button> -->
     </div>
+
     <div class="modal_container">
       <div class="modal">
-        <!-- <img src="./assets/1.jpg" alt="" /> -->
+        <img src="./assets/cover.png" alt="cover" class="modal_image" />
+        <!-- <div class="audio">AUDIO COMES HERE</div> -->
+
+        <!-- Here comes the variable part of modal -->
+        <div class="modal_data">
+          <!-- <div class="data_entry">
+            <p class="modal_title">ARTISTS</p>
+            <p class="modal_content">
+              Krzysztof Zalewski, Kortezzz, Dawid Podsiadłoo, Zbigniew Wodecki
+            </p>
+          </div>
+          <div class="data_entry">
+            <p class="modal_title">ALBUM type</p>
+            <p class="modal_content">Album</p>
+          </div>
+          <div class="data_entry">
+            <p class="modal_title">RELEASE DATE</p>
+            <p class="modal_content">2018-04-23</p>
+          </div> -->
+        </div>
+        <!-- end of variable modal part -->
+        <div class="buttons_group">
+          <button type="button" class="back_button">
+            <span class="sr-only">Close modal</span>
+          </button>
+          <button type="button" class="like_button">
+            <span class="sr-only">Add to favourites</span>
+          </button>
+        </div>
       </div>
     </div>
   </body>
