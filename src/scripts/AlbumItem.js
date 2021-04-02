@@ -13,9 +13,9 @@ export default class AlbumItem extends Item {
     total_tracks
   ) {
     super(type, id, name, external_url, image);
-    this.album_type = album_type;
-    this.artists = artists.map((artist) => artist.name);
-    this.release_date = release_date;
-    this.total_tracks = total_tracks;
+    this['Album type'] = album_type;
+    this.Artists = artists.map((artist) => artist.name);
+    this['Release date'] = release_date;
+    this['Total tracks'] = total_tracks;
   }
 }

@@ -9,11 +9,31 @@ export default class UIController {
     this.intersectionObserverObject;
     this.searchController;
     this.suggestionsListElement;
+    this.audioContainerElement = document.querySelector('.audio_container');
+    this.audioElement = document.querySelector('.audio');
     this.listOfItems;
     this.container = document.querySelector('.container');
+    this.modalContainer = document.querySelector('.modal_container');
+    this.modalImageElement = document.querySelector('.modal_image');
+    this.modalDataElement = document.querySelector('.modal_data');
+    this.modalBackButtonElement = document.querySelector('.back_button');
 
     this.container.addEventListener('click', this.renderModal.bind(this));
+    this.modalBackButtonElement.addEventListener(
+      'click',
+      this.closeModal.bind(this)
+    );
   }
+
+  closeModal() {
+    this.audioContainerElement.classList.remove('audio_container--visible');
+    this.modalContainer.classList.remove('modal_container--visible');
+    this.modalDataElement.classList.remove('modal_data--explicit');
+    this.modalDataElement.innerHTML = '';
+    this.audioElement.src = 'null';
+    document.body.classList.remove('modal--opened');
+  }
+
   prepareItems(data) {
     const listOfItems = [];
     let totalItemsAmount = 0;
@@ -84,9 +104,9 @@ export default class UIController {
       });
     }
     listOfItems.sort((a, b) => {
-      if (a.popularity < b.popularity) return 1;
-      if (a.type === 'Artist') return -1;
-      if (b.type === 'Artist') return 1;
+      if (a.Popularity < b.Popularity) return 1;
+      if (a.Type === 'Artist') return -1;
+      if (b.Type === 'Artist') return 1;
     });
     this.listOfItems = listOfItems;
     console.log(this.listOfItems);
@@ -119,7 +139,7 @@ export default class UIController {
         },
         { once: true }
       );
-      imageElement.src = item.image;
+      imageElement.src = item.Image;
     });
   }
 
@@ -140,6 +160,7 @@ export default class UIController {
     }
 
     let arrayOfPromises = await this.loadAllImages();
+    console.log(arrayOfPromises);
 
     arrayOfPromises.forEach((promise) => {
       let item = document.createElement('div');
@@ -153,11 +174,11 @@ export default class UIController {
 
       let itemTitle = document.createElement('p');
       itemTitle.className = 'item_title';
-      itemTitle.innerText = `${promise.value.item.type}`;
+      itemTitle.innerText = `${promise.value.item.Type}`;
 
       let itemSubtitle = document.createElement('p');
       itemSubtitle.className = 'item_subtitle';
-      itemSubtitle.innerText = `${promise.value.item.name}`;
+      itemSubtitle.innerText = `${promise.value.item.Name}`;
 
       let itemButtons = document.createElement('div');
       itemButtons.className = 'item_buttons';
@@ -213,43 +234,130 @@ export default class UIController {
   }
 
   renderModal(e) {
-    console.log(e, this);
-    document
-      .querySelector('.modal_container')
-      .classList.add('modal_container--visible');
-
-    //document.classList.add('modal--opened');
-    document.body.classList.add('modal--opened');
     if (!e.target.dataset.item) {
       return;
     } else {
       let object = JSON.parse(e.target.dataset.item);
-      switch (object.type) {
+      let type = object.Type;
+      console.log(object);
+      delete object.Id;
+      delete object.Type;
+      delete object.Name;
+      let fragment;
+      switch (type) {
         case 'Album': {
-          this.renderAlbumModal(object);
+          fragment = this.renderAlbumModal(object);
           break;
         }
         case 'Artist': {
-          this.renderArtistModal(object);
+          fragment = this.renderArtistModal(object);
           break;
         }
         case 'Song': {
-          this.renderSongModal(object);
+          fragment = this.renderSongModal(object);
           break;
         }
       }
+
+      this.modalDataElement.insertAdjacentHTML('afterBegin', fragment);
+      this.modalContainer.classList.add('modal_container--visible');
+      document.body.classList.add('modal--opened');
     }
   }
 
   renderAlbumModal(object) {
-    console.log(object.type);
+    this.modalImageElement.src = object.Image;
+
+    let fragment = `
+      <div class="data_entry">
+        <p class="data_title">Artists</p>
+        <p class="data_content">${object.Artists.join(', ')}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Album type</p>
+        <p class="data_content">${object['Album type']}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Release date</p>
+        <p class="data_content">${object['Release date']}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Total tracks</p>
+        <p class="data_content">${object['Total tracks']}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Spotify page</p>
+        <a class="data_link" href="${object['Spotify page']}">Link</a>
+      </div>
+    `;
+    return fragment;
   }
 
   renderArtistModal(object) {
-    console.log(object.type);
+    this.modalImageElement.src = object.Image;
+
+    let fragment = `
+      <div class="data_entry">
+        <p class="data_title">Genres</p>
+        <p class="data_content">${object.Genres.join(', ')}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Followers</p>
+        <p class="data_content">${object.Followers.total}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Popularity</p>
+        <p class="data_content">${object.Popularity}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Spotify page</p>
+        <a class="data_link" href="${object['Spotify page']}">Link</a>
+      </div>
+    `;
+    return fragment;
   }
 
   renderSongModal(object) {
-    console.log(object.type);
+    this.modalImageElement.src = object.Image;
+    if (object['Audio link']) {
+      this.audioElement.src = object['Audio link'];
+      this.audioContainerElement.classList.add('audio_container--visible');
+    }
+
+    if (object.Explicit) {
+      this.modalDataElement.classList.add('modal_data--explicit');
+    }
+
+    let fragment = `
+      <div class="data_entry">
+        <p class="data_title">Artists</p>
+        <p class="data_content">${object.Artists.join(', ')}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Album</p>
+        <p class="data_content">${object.Album.name}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Duration</p>
+        <p class="data_content">${Math.floor(object.Duration / 60000)}:${
+      Math.round((object.Duration / 1000) % 60) < 10
+        ? '0' + Math.round((object.Duration / 1000) % 60)
+        : Math.round((object.Duration / 1000) % 60)
+    }</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Popularity</p>
+        <p class="data_content">${object.Popularity}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Song number</p>
+        <p class="data_content">${object['Song number']}</p>
+      </div>
+      <div class="data_entry">
+        <p class="data_title">Spotify page</p>
+        <a class="data_link" href="${object['Spotify page']}">Link</a>
+      </div>
+    `;
+    return fragment;
   }
 }

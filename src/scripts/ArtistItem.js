@@ -12,8 +12,8 @@ export default class ArtistItem extends Item {
     popularity
   ) {
     super(type, id, name, external_url, image);
-    this.followers = followers;
-    this.genres = genres;
-    this.popularity = popularity;
+    this.Followers = followers;
+    this.Genres = genres;
+    this.Popularity = popularity;
   }
 }
