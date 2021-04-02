@@ -1,4 +1,4 @@
-import UIController from './UIController';
+import UIController from './AudioController';
 import App from './App';
 const spinner = document.querySelector('.spinner');
 const container = document.querySelector('.container');

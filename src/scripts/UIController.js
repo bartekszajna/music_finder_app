@@ -2,12 +2,14 @@ import AlbumItem from './AlbumItem';
 import ArtistItem from './ArtistItem';
 import TrackItem from './TrackItem';
 import App from './App';
+import AudioController from './AudioController';
 //import DefaultImage from '../assets/default_image.svg';
 
 export default class UIController {
   constructor() {
     this.intersectionObserverObject;
     this.searchController;
+    this.audioController;
     this.suggestionsListElement;
     this.audioContainerElement = document.querySelector('.audio_container');
     this.audioElement = document.querySelector('.audio');
@@ -26,11 +28,12 @@ export default class UIController {
   }
 
   closeModal() {
-    this.audioContainerElement.classList.remove('audio_container--visible');
+    //this.audioContainerElement.classList.remove('audio_container--visible');
     this.modalContainer.classList.remove('modal_container--visible');
     this.modalDataElement.classList.remove('modal_data--explicit');
     this.modalDataElement.innerHTML = '';
-    this.audioElement.src = 'null';
+    //this.audioElement.src = 'null';
+    this.audioController.remove();
     document.body.classList.remove('modal--opened');
   }
 
@@ -307,7 +310,12 @@ export default class UIController {
       </div>
       <div class="data_entry">
         <p class="data_title">Popularity</p>
-        <p class="data_content">${object.Popularity}</p>
+        <div class="data_content data_content--background">
+          <span class="sr-only">${object.Popularity}</span>
+          <div class="data_content--foreground" style="clip-path: inset(0 ${
+            100 - object.Popularity
+          }% 0 0);"></div>
+        </div>
       </div>
       <div class="data_entry">
         <p class="data_title">Spotify page</p>
@@ -319,16 +327,17 @@ export default class UIController {
 
   renderSongModal(object) {
     this.modalImageElement.src = object.Image;
+    let fragment;
+
     if (object['Audio link']) {
-      this.audioElement.src = object['Audio link'];
-      this.audioContainerElement.classList.add('audio_container--visible');
+      this.audioController.render(object);
     }
 
     if (object.Explicit) {
       this.modalDataElement.classList.add('modal_data--explicit');
     }
 
-    let fragment = `
+    fragment = `
       <div class="data_entry">
         <p class="data_title">Artists</p>
         <p class="data_content">${object.Artists.join(', ')}</p>
@@ -347,7 +356,12 @@ export default class UIController {
       </div>
       <div class="data_entry">
         <p class="data_title">Popularity</p>
-        <p class="data_content">${object.Popularity}</p>
+        <div class="data_content data_content--background">
+          <span class="sr-only">${object.Popularity}</span>
+          <div class="data_content--foreground" style="clip-path: inset(0 ${
+            100 - object.Popularity
+          }% 0 0);"></div>
+        </div>
       </div>
       <div class="data_entry">
         <p class="data_title">Song number</p>

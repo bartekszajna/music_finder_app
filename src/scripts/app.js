@@ -1,6 +1,7 @@
 import SuggestionsList from './SuggestionsList';
 import SearchController from './SearchController';
 import UIController from './UIController';
+import AudioController from './AudioController';
 
 export default class App {
   static throttledFunction(fn, delay) {
@@ -18,6 +19,7 @@ export default class App {
     const uiController = new UIController();
     const suggestionsList = new SuggestionsList();
     const searchController = new SearchController();
+    const audioController = new AudioController();
 
     searchController.prepareItems = uiController.prepareItems.bind(
       uiController
@@ -39,6 +41,8 @@ export default class App {
     uiController.searchController = searchController;
     uiController.suggestionsListElement =
       suggestionsList.suggestionsListElement;
+
+    uiController.audioController = audioController;
 
     this.addBodyClickListener(searchController);
     this.preventWindowArrowScroll();
