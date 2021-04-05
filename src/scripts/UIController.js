@@ -14,13 +14,13 @@ export default class UIController {
     this.audioContainerElement = document.querySelector('.audio_container');
     this.audioElement = document.querySelector('.audio');
     this.listOfItems;
-    this.container = document.querySelector('.container');
+    this.itemsContainer = document.querySelector('.items_container');
     this.modalContainer = document.querySelector('.modal_container');
     this.modalImageElement = document.querySelector('.modal_image');
     this.modalDataElement = document.querySelector('.modal_data');
     this.modalBackButtonElement = document.querySelector('.back_button');
 
-    this.container.addEventListener('click', this.renderModal.bind(this));
+    this.itemsContainer.addEventListener('click', this.renderModal.bind(this));
     this.modalBackButtonElement.addEventListener(
       'click',
       this.closeModal.bind(this)
@@ -148,7 +148,7 @@ export default class UIController {
 
   async renderItemsList(totalItemsAmount, fetchedDataOffset) {
     if (totalItemsAmount === 0) {
-      this.container.insertAdjacentHTML(
+      this.itemsContainer.insertAdjacentHTML(
         'beforeEnd',
         `<p class="amount_header">No results available</p>`
       );
@@ -207,18 +207,17 @@ export default class UIController {
       item.append(itemImage);
       item.append(itemData);
 
-      this.container.append(item);
+      this.itemsContainer.append(item);
     });
 
     if (fetchedDataOffset === 0) {
-      this.container.insertAdjacentHTML(
+      this.itemsContainer.insertAdjacentHTML(
         'afterBegin',
         `<p class="amount_header">${totalItemsAmount} total results</p>`
       );
     }
 
-    this.container.classList.add('container--visible');
-
+    this.itemsContainer.classList.add('visible');
     // they are created every time the renderItemsList is evoked and accumulate unnecessary
     // which causes more data loading if we scroll through old items back and forth
     // so we need to disconnect the old observers

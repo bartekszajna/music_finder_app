@@ -6,6 +6,7 @@ export default class SearchController {
   constructor() {
     this.fetchedDataOffset = 0;
     this.previousInputValue = '';
+    this.itemsContainer;
     this.suggestionsListElement;
     this.formSearchElement = document.querySelector('.header_search');
     this.inputSearchElement = document.querySelector('.search_input');
@@ -52,7 +53,8 @@ export default class SearchController {
     }
 
     if (this.fetchedDataOffset === 0) {
-      document.querySelector('.container').innerHTML = '';
+      this.itemsContainer.classList.remove('visible');
+      this.itemsContainer.innerHTML = '';
     }
     console.log('fetching');
     this.previousInputValue = inputValue;

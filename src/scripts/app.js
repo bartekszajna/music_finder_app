@@ -32,6 +32,7 @@ export default class App {
     suggestionsList.formSearchElement = searchController.formSearchElement;
     suggestionsList.inputSearchElement = searchController.inputSearchElement;
 
+    searchController.itemsContainer = uiController.itemsContainer;
     searchController.suggestionsListElement =
       suggestionsList.suggestionsListElement;
     searchController.renderSuggestionsList = suggestionsList.render.bind(
@@ -51,7 +52,7 @@ export default class App {
   static addBodyClickListener(searchController) {
     function blurHandler(e) {
       if (
-        e.target !== document.querySelector('.container') &&
+        e.target !== document.querySelector('items_container') &&
         !e.target.contains(document.querySelector('.header')) &&
         e.target !== document.querySelector('.header_logo')
       ) {
@@ -91,7 +92,8 @@ export default class App {
     }
 
     let observer = new IntersectionObserver(fireOnScroll, options);
-    let target = document.body.querySelector('.container').lastElementChild;
+    let target = document.body.querySelector('.items_container')
+      .lastElementChild;
     observer.observe(target);
     return observer;
   }
