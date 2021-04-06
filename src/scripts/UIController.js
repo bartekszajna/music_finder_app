@@ -350,7 +350,7 @@ export default class UIController {
         <p class="data_content">${Math.floor(object.Duration / 60000)}:${
       Math.round((object.Duration / 1000) % 60) < 10
         ? '0' + Math.round((object.Duration / 1000) % 60)
-        : Math.round((object.Duration / 1000) % 60)
+        : Math.floor((object.Duration / 1000) % 60)
     }</p>
       </div>
       <div class="data_entry">

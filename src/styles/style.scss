@@ -79,6 +79,8 @@ body {
     width: 4rem;
     height: 4rem;
     background-image: url(../assets/rectangle.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
     top: calc(100% - 2px);
     left: -2.1px;
@@ -147,7 +149,7 @@ body {
 
 .header_search:focus-within .search_list {
   transform: scale(1) translateZ(-10px);
-  background-color: #f0f0f0;
+  background-color: #f5f5f5;
 }
 
 .header_search:focus-within .search_input {
@@ -190,7 +192,7 @@ body {
   left: 0;
   width: 100%;
   padding-top: 3.5rem;
-  background-color: none;
+  background-color: transparent;
   transform: scale(0) translateZ(-10px);
   transition: background-color 0.2s ease-out;
   border-radius: 1.75rem;
@@ -209,10 +211,10 @@ body {
 
   cursor: pointer;
   &:hover {
-    background: #e5e5e5;
+    background: #eaeaea;
   }
   &:focus {
-    background: #e5e5e5;
+    background: #eaeaea;
   }
 
   &:first-of-type {
@@ -235,26 +237,27 @@ body {
   background: none;
   background-repeat: no-repeat;
   background-position: top center;
+  background-size: cover;
   outline: none;
   border: none;
   opacity: 0.75;
-  min-width: 3rem;
+  width: 3rem;
   height: 3rem;
   margin: 0;
   margin-right: 1rem;
   transition: transform 0.1s ease-out;
+  position: relative;
 
   &:hover,
   &:focus,
   &:active {
     opacity: 1;
-    transform: scale(1.15);
+    transform: scale(1.05);
   }
 }
 
 .button--user {
   background-image: url(../assets/user_icons.svg);
-  position: relative;
   margin-left: 1rem;
 }
 
@@ -262,11 +265,21 @@ body {
   background-image: url(../assets/mode_icons.svg);
 }
 
+.button_text {
+  color: white;
+  font-size: 1.8rem;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+}
+
 .button_quantity {
   color: white;
   position: absolute;
   top: -0.2rem;
-  right: 0;
+  left: 75%;
 }
 
 .items_container {
@@ -440,7 +453,7 @@ body {
       font-size: 1.6rem;
 
       width: 65%;
-      transform: translate(1.7rem, 0.2rem);
+      transform: translate(1.9rem, 0.2rem);
 
       &:focus,
       &:hover {
@@ -502,7 +515,7 @@ body {
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1.8rem 1.5rem;
+    padding: 0 1.6rem 1.2rem;
   }
 
   .back_button {
@@ -510,6 +523,7 @@ body {
     background-image: url(../assets/back_buttons.svg);
     opacity: 0.4;
     background-position: top center;
+    background-size: cover;
     width: 3rem;
     height: 3rem;
     border: none;
@@ -564,8 +578,9 @@ body {
   z-index: 5;
   background: rgba(255, 255, 255, 0.7);
   border-radius: 50%;
-  top: 7.5rem;
-  left: 8.5rem;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -646,11 +661,33 @@ body {
 
   .search_list {
     padding-top: 4.5rem;
+    border-radius: 2.25rem;
   }
 
   .list_item {
     font-size: 2rem;
-    padding: 0.8rem 1.2rem;
+    padding: 1rem 1.4rem;
+  }
+
+  .list_item:first-of-type {
+    padding-top: 1.4rem;
+  }
+
+  .list_item:last-of-type {
+    padding-bottom: 1.6rem;
+  }
+
+  .button_group {
+    width: 30vw;
+  }
+
+  .header_button {
+    width: 4rem;
+    height: 4rem;
+
+    .button_quantity {
+      font-size: 1.8rem;
+    }
   }
   .amount_header {
     font-size: 2.6rem;
@@ -706,6 +743,7 @@ body {
     border-top-left-radius: 1.5rem;
     border-bottom-left-radius: 1.5rem;
     width: 15rem;
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.4);
   }
 
   .item_data {
@@ -736,7 +774,127 @@ body {
   }
 }
 
+@media (min-width: 768px) {
+  .header {
+    flex-direction: unset;
+    align-items: center;
+    border-bottom-right-radius: 7.5rem;
+
+    &::after {
+      width: 10rem;
+      height: 10rem;
+      top: calc(100% - 5px);
+      left: -5px;
+    }
+  }
+
+  .header_logo {
+    width: unset;
+    flex-grow: 5;
+    margin-left: 2rem;
+  }
+
+  .header_group {
+    flex-grow: 1;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  .header_search {
+    max-width: unset;
+    height: 5.5rem;
+  }
+
+  .search_icon {
+    width: 2.5rem;
+    padding: 0 1.4rem 0 1.8rem;
+  }
+
+  .search_input {
+    font-size: 2.4rem;
+    width: calc(100% - 8rem);
+  }
+
+  .search_list {
+    border-radius: 2.75rem;
+    padding-top: 5.5rem;
+  }
+
+  .list_item {
+    font-size: 2.4rem;
+  }
+
+  .button_group {
+    width: 22rem;
+    margin: 0 2rem;
+  }
+
+  .header_button {
+    margin: 0;
+  }
+
+  .amount_header {
+    margin: 1rem 0 1.5rem 3rem;
+  }
+
+  .modal {
+    width: 36rem;
+    height: 55rem;
+
+    .modal_data {
+      padding-bottom: 5.5rem;
+
+      .data_title {
+        font-size: 1.6rem;
+        width: 35%;
+      }
+
+      .data_content {
+        font-size: 2rem;
+      }
+
+      .data_link {
+        font-size: 2rem;
+        transform: translate(2.4rem, 0.2rem);
+
+        &::before {
+          width: 2rem;
+          height: 2rem;
+          left: -2.4rem;
+        }
+      }
+    }
+
+    .buttons_group {
+      padding: 0 1.8rem 1.5rem;
+    }
+
+    .back_button {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    .like_button {
+      width: 3.7rem;
+      height: 3.7rem;
+    }
+  }
+}
+
 @media (min-width: 840px) {
+  body {
+    background-image: url(../assets/desktop_background_image.svg);
+    background-size: contain;
+    background-position: center;
+  }
+  .header_link {
+    font-size: 2.8rem;
+  }
+
+  .header_icon {
+    width: 3rem;
+  }
+
   .items_container {
     margin: 0 2rem;
     display: grid;
@@ -746,11 +904,71 @@ body {
 
   .amount_header {
     grid-column: 1 / -1;
-    margin: 0;
+    margin: 1rem 0 0;
   }
 
   .item {
     margin: 0;
     width: unset;
+  }
+}
+
+@media (min-width: 1200px) {
+  .header {
+    height: 12rem;
+  }
+
+  .header_link {
+    font-size: 3.6rem;
+  }
+
+  .header_icon {
+    width: 3.6rem;
+  }
+
+  .header_search {
+    height: 6rem;
+  }
+
+  .search_input {
+    font-size: 2.6rem;
+  }
+
+  .search_list {
+    padding-top: 6rem;
+    border-radius: 3rem;
+  }
+
+  .items_container {
+    gap: 3rem;
+  }
+
+  .item {
+    height: 24rem;
+    border-radius: 3rem;
+    padding: 2rem 2.5rem 2rem 2rem;
+    max-width: 70rem;
+  }
+  .item_image {
+    width: 21rem;
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+  }
+
+  .item_title,
+  .item_subtitle {
+    font-size: 3rem;
+  }
+
+  .item_button--info {
+    font-size: 2.2rem;
+    border-width: 0.2rem;
+    padding: 0.6rem 2.8rem;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .item_button--like {
+    width: 4rem;
+    height: 4rem;
   }
 }
