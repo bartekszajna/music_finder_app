@@ -35,6 +35,7 @@ export default class UIController {
     //this.audioElement.src = 'null';
     this.audioController.remove();
     document.body.classList.remove('modal--opened');
+    //document.html.classList.remove('modal--opened');
   }
 
   prepareItems(data) {
@@ -216,6 +217,8 @@ export default class UIController {
         `<p class="amount_header">${totalItemsAmount} total results</p>`
       );
     }
+    const spinner = document.querySelector('.spinner');
+    spinner.classList.remove('spinner--visible');
 
     this.itemsContainer.classList.add('visible');
     // they are created every time the renderItemsList is evoked and accumulate unnecessary
@@ -289,7 +292,9 @@ export default class UIController {
       </div>
       <div class="data_entry">
         <p class="data_title">Spotify page</p>
-        <a class="data_link" href="${object['Spotify page']}">Link</a>
+        <a class="data_link" href="${
+          object['Spotify page']
+        }" target="_blank" rel="noreferrer noopener">Link</a>
       </div>
     `;
     return fragment;
@@ -318,7 +323,9 @@ export default class UIController {
       </div>
       <div class="data_entry">
         <p class="data_title">Spotify page</p>
-        <a class="data_link" href="${object['Spotify page']}">Link</a>
+        <a class="data_link" href="${
+          object['Spotify page']
+        }" target="_blank" rel="noreferrer noopener">Link</a>
       </div>
     `;
     return fragment;
@@ -368,7 +375,9 @@ export default class UIController {
       </div>
       <div class="data_entry">
         <p class="data_title">Spotify page</p>
-        <a class="data_link" href="${object['Spotify page']}">Link</a>
+        <a class="data_link" href="${
+          object['Spotify page']
+        }" target="_blank" rel="noreferrer noopener">Link</a>
       </div>
     `;
     return fragment;

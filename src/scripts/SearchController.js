@@ -31,6 +31,8 @@ export default class SearchController {
   async submissionHandler(e) {
     console.log(this.fetchedDataOffset);
     e.preventDefault();
+    this.inputSearchElement.blur();
+
     let inputValue = e.target[0].value.trim();
     // to make sure we do not make unnecessary repeated API calls
     // for the exact same data
@@ -55,6 +57,7 @@ export default class SearchController {
     if (this.fetchedDataOffset === 0) {
       this.itemsContainer.classList.remove('visible');
       this.itemsContainer.innerHTML = '';
+      window.scrollTo(0, 0);
     }
     console.log('fetching');
     this.previousInputValue = inputValue;
@@ -62,7 +65,7 @@ export default class SearchController {
     this.suggestionsListElement.innerText = '';
 
     // here comes the whole logic behind fetching all the tiles
-    spinner.style.display = 'block';
+    spinner.classList.add('spinner--visible');
     const data = await this.fetchData(inputValue, this.fetchedDataOffset);
     // here can come data actually being an error JSON, like 404 or 429
     // so remember to implement fallback for this situation
@@ -72,7 +75,6 @@ export default class SearchController {
     this.renderItemsList(totalItemsAmount, this.fetchedDataOffset);
 
     this.fetchedDataOffset += 3;
-    spinner.style.display = 'none';
   }
 
   arrowKeysHandler(e) {
