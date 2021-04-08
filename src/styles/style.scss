@@ -16,9 +16,10 @@
     #bc1888
   );
 }
-html {
+
+​ html {
   min-width: 28rem;
-  height: 100%;
+  min-height: 100%;
   //min-height: 50rem;
   //height: calc(var(--vh, 1vh) * 100);
 }
@@ -32,7 +33,9 @@ body {
   background-position: top center;
   background-size: cover;
   background-attachment: fixed;
+  width: 100%;
   min-height: 100%;
+  //height: calc(var(--vh, 1vh) * 100);
   margin: 0 auto;
   padding: 10.5rem 2rem 3.5rem;
   font-family: 'Roboto Condensed', sans-serif;
@@ -40,8 +43,10 @@ body {
 
 .modal--opened {
   //height: 100vh;
+  //overflow-x: hidden;
   //overflow-y: hidden;
-  height: 58rem;
+  position: fixed;
+  //margin: 0;
 }
 
 .sr-only {
@@ -376,9 +381,11 @@ body {
 .modal_container {
   position: fixed;
   top: 0;
-  bottom: 0;
+  //bottom: 0;
   left: 0;
-  right: 0;
+  //right: 0;
+  width: 100%;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   transform: scale(0);
@@ -394,6 +401,15 @@ body {
   transform: scale(1);
   opacity: 1;
   transition: opacity 0.3s ease-out, transform 0s 0s ease-out;
+  //overflow: hidden;
+}
+
+.modal_overflow {
+  max-height: 100%;
+  overflow: auto;
+  position: relative;
+  width: 100%;
+  height: 45rem;
 }
 
 // .modal {
@@ -424,6 +440,7 @@ body {
   position: relative;
   width: 27rem;
   height: 44rem;
+  margin: 0 auto;
   background: white;
   color: black;
   border-radius: 20px;
@@ -888,6 +905,10 @@ body {
     margin: 0;
   }
 
+  .modal_overflow {
+    height: 56rem;
+  }
+
   .modal {
     width: 36rem;
     height: 55rem;
@@ -1114,6 +1135,10 @@ body {
     height: 4rem;
   }
 
+  .modal_overflow {
+    height: 63rem;
+  }
+
   .modal {
     width: 42rem;
     height: 62rem;
@@ -1132,6 +1157,10 @@ body {
     max-width: 250rem;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .modal_overflow {
+    height: 78rem;
   }
 
   .modal {

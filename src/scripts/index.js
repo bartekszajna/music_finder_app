@@ -57,3 +57,5 @@ mediaQueryObject.addEventListener('change', function (e) {
 //     document.documentElement.style.setProperty('--vh', `${vh}px`);
 //   });
 // }
+
+// resizeVhUnit();

@@ -35,6 +35,16 @@ export default class UIController {
     //this.audioElement.src = 'null';
     this.audioController.remove();
     document.body.classList.remove('modal--opened');
+
+    const scrollY = document.body.style.top;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    document.body.style.paddingRight = '20px';
+
+    document.querySelector('.modal_overflow').style.marginRight = '';
+
+    //document.documentElement.classList.remove('modal--opened');
     //document.html.classList.remove('modal--opened');
   }
 
@@ -264,9 +274,21 @@ export default class UIController {
         }
       }
 
+      document.body.style.paddingRight = `${
+        window.innerWidth - document.documentElement.clientWidth + 20
+      }px`;
+      document.querySelector('.modal_overflow').style.marginRight = `${
+        window.innerWidth - document.documentElement.clientWidth
+      }px`;
+
       this.modalDataElement.insertAdjacentHTML('afterBegin', fragment);
       this.modalContainer.classList.add('modal_container--visible');
-      document.body.classList.add('modal--opened');
+      //document.body.classList.add('modal--opened');
+      //document.documentElement.classList.add('modal--opened');
+
+      let scrolledBy = window.scrollY;
+      document.body.style.top = `-${scrolledBy}px`;
+      document.body.style.position = 'fixed';
     }
   }
 
