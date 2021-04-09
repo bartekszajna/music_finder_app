@@ -518,12 +518,11 @@ body {
 
     .data_link {
       position: relative;
-      display: flex;
+      display: inline-block;
       color: #00276d;
       font-weight: 700;
       font-size: 1.6rem;
 
-      width: 65%;
       transform: translate(1.9rem, 0.2rem);
 
       &:focus,

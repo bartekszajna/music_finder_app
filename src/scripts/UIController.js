@@ -11,16 +11,24 @@ export default class UIController {
     this.searchController;
     this.audioController;
     this.suggestionsListElement;
-    this.audioContainerElement = document.querySelector('.audio_container');
-    this.audioElement = document.querySelector('.audio');
     this.listOfItems;
+    this.audioElement;
+    this.modalAudioButtonElement;
+    this.modalLinkElement;
+    this.clickedInfoButton;
+    this.firstFocusableModalElement;
+    this.lastFocusableModalElement;
+    this.audioContainerElement = document.querySelector('.audio_container');
     this.itemsContainer = document.querySelector('.items_container');
     this.modalContainer = document.querySelector('.modal_container');
+    this.modalElement = document.querySelector('.modal');
     this.modalImageElement = document.querySelector('.modal_image');
     this.modalDataElement = document.querySelector('.modal_data');
     this.modalBackButtonElement = document.querySelector('.back_button');
+    this.modalLikeButtonElement = document.querySelector('.like_button');
 
     this.itemsContainer.addEventListener('click', this.renderModal.bind(this));
+
     this.modalBackButtonElement.addEventListener(
       'click',
       this.closeModal.bind(this)
@@ -28,6 +36,7 @@ export default class UIController {
   }
 
   closeModal() {
+    console.log('XD');
     //this.audioContainerElement.classList.remove('audio_container--visible');
     this.modalContainer.classList.remove('modal_container--visible');
     this.modalDataElement.classList.remove('modal_data--explicit');
@@ -46,6 +55,28 @@ export default class UIController {
 
     //document.documentElement.classList.remove('modal--opened');
     //document.html.classList.remove('modal--opened');
+
+    this.modalContainer.removeEventListener(
+      'click',
+      this.detectClickOutsideModal
+    );
+
+    this.modalContainer.removeEventListener(
+      'keydown',
+      this.detectEscapeKeydown
+    );
+
+    this.firstFocusableModalElement.removeEventListener(
+      'keydown',
+      this.firstModalElHandler
+    );
+
+    this.lastFocusableModalElement.removeEventListener(
+      'keydown',
+      this.lastModalElHandler
+    );
+
+    this.clickedInfoButton.focus();
   }
 
   prepareItems(data) {
@@ -251,44 +282,101 @@ export default class UIController {
   renderModal(e) {
     if (!e.target.dataset.item) {
       return;
-    } else {
-      let object = JSON.parse(e.target.dataset.item);
-      let type = object.Type;
-      console.log(object);
-      delete object.Id;
-      delete object.Type;
-      delete object.Name;
-      let fragment;
-      switch (type) {
-        case 'Album': {
-          fragment = this.renderAlbumModal(object);
-          break;
-        }
-        case 'Artist': {
-          fragment = this.renderArtistModal(object);
-          break;
-        }
-        case 'Song': {
-          fragment = this.renderSongModal(object);
-          break;
-        }
+    }
+
+    this.clickedInfoButton = e.target;
+    let object = JSON.parse(e.target.dataset.item);
+    let type = object.Type;
+    console.log(object);
+    delete object.Id;
+    delete object.Type;
+    delete object.Name;
+    let fragment;
+    switch (type) {
+      case 'Album': {
+        fragment = this.renderAlbumModal(object);
+        break;
       }
+      case 'Artist': {
+        fragment = this.renderArtistModal(object);
+        break;
+      }
+      case 'Song': {
+        fragment = this.renderSongModal(object);
+        break;
+      }
+    }
 
-      document.body.style.paddingRight = `${
-        window.innerWidth - document.documentElement.clientWidth + 20
-      }px`;
-      document.querySelector('.modal_overflow').style.marginRight = `${
-        window.innerWidth - document.documentElement.clientWidth
-      }px`;
+    document.body.style.paddingRight = `${
+      window.innerWidth - document.documentElement.clientWidth + 20
+    }px`;
+    document.querySelector('.modal_overflow').style.marginRight = `${
+      window.innerWidth - document.documentElement.clientWidth
+    }px`;
 
-      this.modalDataElement.insertAdjacentHTML('afterBegin', fragment);
-      this.modalContainer.classList.add('modal_container--visible');
-      //document.body.classList.add('modal--opened');
-      //document.documentElement.classList.add('modal--opened');
+    this.modalDataElement.insertAdjacentHTML('afterBegin', fragment);
 
-      let scrolledBy = window.scrollY;
-      document.body.style.top = `-${scrolledBy}px`;
-      document.body.style.position = 'fixed';
+    console.log(this);
+
+    this.audioElement = document.querySelector('.audio');
+    this.modalAudioButtonElement = document.querySelector('.audio_button');
+    this.modalLinkElement = document.querySelector('.data_link');
+
+    this.firstFocusableModalElement = this.audioContainerElement
+      .firstElementChild
+      ? this.modalAudioButtonElement
+      : this.modalLinkElement;
+
+    this.lastFocusableModalElement = this.modalLikeButtonElement;
+
+    this.firstFocusableModalElement.focus();
+
+    this.firstFocusableModalElement.addEventListener(
+      'keydown',
+      this.firstModalElHandler.bind(this)
+    );
+
+    this.lastFocusableModalElement.addEventListener(
+      'keydown',
+      this.lastModalElHandler.bind(this)
+    );
+
+    this.modalContainer.addEventListener('click', this.detectClickOutsideModal);
+
+    this.modalContainer.addEventListener('keydown', this.detectEscapeKeydown);
+
+    this.modalContainer.classList.add('modal_container--visible');
+    //document.body.classList.add('modal--opened');
+    //document.documentElement.classList.add('modal--opened');
+
+    let scrolledBy = window.scrollY;
+    document.body.style.top = `-${scrolledBy}px`;
+    document.body.style.position = 'fixed';
+  }
+
+  firstModalElHandler(e) {
+    if (e.shiftKey && e.code === 'Tab') {
+      e.preventDefault();
+      this.lastFocusableModalElement.focus();
+    }
+  }
+
+  lastModalElHandler(e) {
+    if (e.code === 'Tab' && !e.shiftKey) {
+      e.preventDefault();
+      this.firstFocusableModalElement.focus();
+    }
+  }
+
+  detectClickOutsideModal(e) {
+    if (e.target === this || e.target === this.firstElementChild) {
+      this.querySelector('.back_button').click();
+    }
+  }
+
+  detectEscapeKeydown(e) {
+    if (e.code === 'Escape') {
+      this.querySelector('.back_button').click();
     }
   }
 
@@ -314,9 +402,11 @@ export default class UIController {
       </div>
       <div class="data_entry">
         <p class="data_title">Spotify page</p>
-        <a class="data_link" href="${
-          object['Spotify page']
-        }" target="_blank" rel="noreferrer noopener">Link</a>
+        <p class="data_content">
+          <a class="data_link" href="${
+            object['Spotify page']
+          }" target="_blank" rel="noreferrer noopener">Link</a>
+        </p>
       </div>
     `;
     return fragment;
@@ -345,9 +435,11 @@ export default class UIController {
       </div>
       <div class="data_entry">
         <p class="data_title">Spotify page</p>
-        <a class="data_link" href="${
-          object['Spotify page']
-        }" target="_blank" rel="noreferrer noopener">Link</a>
+        <p class="data_content">
+          <a class="data_link" href="${
+            object['Spotify page']
+          }" target="_blank" rel="noreferrer noopener">Link</a>
+        </p>
       </div>
     `;
     return fragment;
@@ -397,9 +489,11 @@ export default class UIController {
       </div>
       <div class="data_entry">
         <p class="data_title">Spotify page</p>
-        <a class="data_link" href="${
-          object['Spotify page']
-        }" target="_blank" rel="noreferrer noopener">Link</a>
+        <p class="data_content">
+          <a class="data_link" href="${
+            object['Spotify page']
+          }" target="_blank" rel="noreferrer noopener">Link</a>
+        </p>
       </div>
     `;
     return fragment;
