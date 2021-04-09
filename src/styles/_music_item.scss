@@ -4,9 +4,9 @@
   width: 100%;
   padding: 1rem 1.5rem 1rem 1rem;
   height: 10.5rem;
-  background: white;
+  background: var(--item-background);
   border-radius: 1.5rem;
-  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 4px 0 var(--item-box-shadow);
   display: flex;
   align-items: stretch;
   justify-content: space-between;
@@ -15,7 +15,6 @@
 
 .item_image {
   width: 8.5rem;
-  //height: auto;
   height: 100%;
   object-fit: fill;
   border-bottom-left-radius: 1rem;
@@ -34,13 +33,13 @@
 
 .item_title {
   font-size: 1.4rem;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--item-title-color);
   margin: 0.3rem 0;
 }
 
 .item_subtitle {
   font-weight: 700;
-  color: #00276d;
+  color: var(--item-subtitle-color);
   font-size: 1.6rem;
   //white-space: nowrap;
   //text-overflow: ellipsis;
@@ -63,9 +62,9 @@
   outline: none;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 1.2rem;
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--item-info-button-color);
   border-radius: 3rem;
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--item-info-button-color);
   padding: 0.2rem 1.4rem;
   transform-origin: left bottom;
 
@@ -81,18 +80,19 @@
   background: none;
   font-family: 'Roboto Condensed', sans-serif;
   background-repeat: no-repeat;
-  background-position: top;
-  background-size: cover;
+  background-position-x: var(--item-like-button-position);
+  background-position-y: top;
+  background-size: 200% 300%;
   padding: 0;
   width: 2rem;
   height: 2rem;
   border: none;
   outline: none;
-  background-image: url(../assets/heart_icons_light.svg);
+  background-image: url(../assets/heart_icons.svg);
 
   &:hover,
   &:focus,
   &:active {
-    background-position: center;
+    background-position-y: center;
   }
 }

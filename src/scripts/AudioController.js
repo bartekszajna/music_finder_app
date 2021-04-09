@@ -58,7 +58,6 @@ export default class AudioController {
           cx="50"
           cy="50"
           r="46"
-          stroke="#00256C"
           stroke-width="8"
         />
       </svg>

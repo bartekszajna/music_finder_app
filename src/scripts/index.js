@@ -59,3 +59,11 @@ mediaQueryObject.addEventListener('change', function (e) {
 // }
 
 // resizeVhUnit();
+
+document.querySelector('.button--mode').addEventListener('click', (e) => {
+  //document.documentElement.classList.add('animate_mode');
+  document.documentElement.classList.toggle('dark_mode');
+  // let id = setTimeout(() => {
+  //   document.documentElement.classList.remove('animate_mode');
+  // }, 2000);
+});
