@@ -6,7 +6,7 @@ const config = {};
 
 config.mode = 'development';
 
-config.entry = { main: './src/scripts/index.js' };
+config.entry = { main: './src/scripts/index.js', 404: './src/scripts/404.js' };
 
 config.output = {
   filename: '[name].bundle.js',
@@ -48,6 +48,12 @@ config.module = {
 config.plugins = [
   new HtmlWebpackPlugin({
     template: './src/index.html',
+  }),
+  new HtmlWebpackPlugin({
+    filename: '404.html',
+    template: './src/404.html',
+    chunks: ['404'],
+    injects: true,
   }),
   new CleanWebpackPlugin(),
 ];
