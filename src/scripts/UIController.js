@@ -3,7 +3,6 @@ import ArtistItem from './ArtistItem';
 import TrackItem from './TrackItem';
 import App from './App';
 import AudioController from './AudioController';
-//import DefaultImage from '../assets/default_image.svg';
 
 export default class UIController {
   constructor() {
@@ -341,7 +340,10 @@ export default class UIController {
       this.lastModalElHandler.bind(this)
     );
 
-    this.modalContainer.addEventListener('click', this.detectClickOutsideModal);
+    this.modalContainer.addEventListener(
+      'mousedown',
+      this.detectClickOutsideModal
+    );
 
     this.modalContainer.addEventListener('keydown', this.detectEscapeKeydown);
 
@@ -369,9 +371,24 @@ export default class UIController {
   }
 
   detectClickOutsideModal(e) {
-    if (e.target === this || e.target === this.firstElementChild) {
-      this.querySelector('.back_button').click();
-    }
+    const mouseDownTarget = e.target;
+
+    let mouseUpTarget;
+    this.addEventListener(
+      'mouseup',
+      (e) => {
+        mouseUpTarget = e.target;
+        if (
+          mouseDownTarget !== mouseUpTarget ||
+          (mouseDownTarget !== this &&
+            mouseDownTarget !== this.firstElementChild)
+        ) {
+          return;
+        }
+        this.querySelector('.back_button').click();
+      },
+      { once: true }
+    );
   }
 
   detectEscapeKeydown(e) {

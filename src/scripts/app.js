@@ -2,6 +2,7 @@ import SuggestionsList from './SuggestionsList';
 import SearchController from './SearchController';
 import UIController from './UIController';
 import AudioController from './AudioController';
+import ModeController from './ModeController';
 
 export default class App {
   static throttledFunction(fn, delay) {
@@ -20,6 +21,7 @@ export default class App {
     const suggestionsList = new SuggestionsList();
     const searchController = new SearchController();
     const audioController = new AudioController();
+    const modeController = new ModeController();
 
     searchController.prepareItems = uiController.prepareItems.bind(
       uiController
@@ -45,6 +47,9 @@ export default class App {
 
     uiController.audioController = audioController;
 
+    modeController.systemModeHandler();
+    modeController.storageModeHandler();
+
     this.addBodyClickListener(searchController);
     this.preventWindowArrowScroll();
   }
@@ -52,7 +57,7 @@ export default class App {
   static addBodyClickListener(searchController) {
     function blurHandler(e) {
       if (
-        e.target !== document.querySelector('items_container') &&
+        e.target !== document.querySelector('.items_container') &&
         !e.target.contains(document.querySelector('.header')) &&
         e.target !== document.querySelector('.header_logo')
       ) {

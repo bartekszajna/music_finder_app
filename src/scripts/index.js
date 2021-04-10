@@ -46,24 +46,3 @@ mediaQueryObject.addEventListener('change', function (e) {
       .forEach((button) => button.classList.add('sr-only'));
   }
 });
-
-// function resizeVhUnit() {
-//   // initial setting, for page load
-//   let vh = window.innerHeight * 0.01;
-//   document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-//   window.addEventListener('resize', () => {
-//     let vh = window.innerHeight * 0.01;
-//     document.documentElement.style.setProperty('--vh', `${vh}px`);
-//   });
-// }
-
-// resizeVhUnit();
-
-document.querySelector('.button--mode').addEventListener('click', (e) => {
-  //document.documentElement.classList.add('animate_mode');
-  document.documentElement.classList.toggle('dark_mode');
-  // let id = setTimeout(() => {
-  //   document.documentElement.classList.remove('animate_mode');
-  // }, 2000);
-});

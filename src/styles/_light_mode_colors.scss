@@ -92,6 +92,10 @@ $amount-header-color-light: rgb(0, 58, 127);
 
 $amount-header-color-dark: rgb(233, 233, 234);
 
+$spinner-path-stroke-light: rgb(0, 58, 127);
+
+$spinner-path-stroke-dark: #df4c77;
+
 $item-title-color-light: rgba(0, 0, 0, 0.5);
 
 $item-title-color-dark: rgba(255, 255, 255, 0.65);
@@ -188,71 +192,71 @@ $audio-path-stroke-light: #00256c;
 
 $audio-path-stroke-dark: #df4c77;
 
-:root {
-  --body-background: #{$body-background-light};
+// .light_mode {
+//   --body-background: #{$body-background-light};
 
-  --header-background: #{$header-background-light};
+//   --header-background: #{$header-background-light};
 
-  --header-triangle-position: #{$header-triangle-position-light};
+//   --header-triangle-position: #{$header-triangle-position-light};
 
-  --footer-background: #{$footer-background-light};
+//   --footer-background: #{$footer-background-light};
 
-  --footer-triangle-position: #{$footer-triangle-position-light};
+//   --footer-triangle-position: #{$footer-triangle-position-light};
 
-  --search-background-focused: #{$search-background-focused-light};
+//   --search-background-focused: #{$search-background-focused-light};
 
-  --search-list-background: #{$search-list-background-light};
+//   --search-list-background: #{$search-list-background-light};
 
-  --search-color-focused: #{$search-color-focused-light};
+//   --search-color-focused: #{$search-color-focused-light};
 
-  --search-list-color: #{$search-list-color-light};
+//   --search-list-color: #{$search-list-color-light};
 
-  --search-list-box-shadow: #{$search-list-box-shadow-light};
+//   --search-list-box-shadow: #{$search-list-box-shadow-light};
 
-  --search-item-hover: #{$search-item-hover-light};
+//   --search-item-hover: #{$search-item-hover-light};
 
-  --button-mode-position: #{$button-mode-position-light};
+//   --button-mode-position: #{$button-mode-position-light};
 
-  --amount-header-color: #{$amount-header-color-light};
+//   --amount-header-color: #{$amount-header-color-light};
 
-  --item-info-button-color: #{$item-info-button-color-light};
+//   --item-info-button-color: #{$item-info-button-color-light};
 
-  --item-like-button-position: #{$item-like-button-position-light};
+//   --item-like-button-position: #{$item-like-button-position-light};
 
-  --item-title-color: #{$item-title-color-light};
+//   --item-title-color: #{$item-title-color-light};
 
-  --item-subtitle-color: #{$item-subtitle-color-light};
+//   --item-subtitle-color: #{$item-subtitle-color-light};
 
-  --item-background: #{$item-background-light};
+//   --item-background: #{$item-background-light};
 
-  --item-box-shadow: #{$item-box-shadow-light};
+//   --item-box-shadow: #{$item-box-shadow-light};
 
-  --modal-container-background: #{$modal-container-background-light};
+//   --modal-container-background: #{$modal-container-background-light};
 
-  --modal-box-shadow: #{$modal-box-shadow-light};
+//   --modal-box-shadow: #{$modal-box-shadow-light};
 
-  --modal-background: #{$modal-background-light};
+//   --modal-background: #{$modal-background-light};
 
-  --data-title-color: #{$data-title-color-light};
+//   --data-title-color: #{$data-title-color-light};
 
-  --data-content-color: #{$data-content-color-light};
+//   --data-content-color: #{$data-content-color-light};
 
-  --link-icon-position: #{$link-icon-position-light};
+//   --link-icon-position: #{$link-icon-position-light};
 
-  --explicit-text: #{$explicit-text-light};
+//   --explicit-text: #{$explicit-text-light};
 
-  --explicit-background: #{$explicit-background-light};
+//   --explicit-background: #{$explicit-background-light};
 
-  --back-button-position: #{$back-button-position-light};
+//   --back-button-position: #{$back-button-position-light};
 
-  --like-button-position: #{$like-button-position-light};
+//   --like-button-position: #{$like-button-position-light};
 
-  --audio-container-background: #{$audio-container-background-light};
+//   --audio-container-background: #{$audio-container-background-light};
 
-  --audio-button-position: #{$audio-button-position-light};
+//   --audio-button-position: #{$audio-button-position-light};
 
-  --audio-path-stroke: #{$audio-path-stroke-light};
-}
+//   --audio-path-stroke: #{$audio-path-stroke-light};
+// }
 
 .dark_mode {
   --body-background: #{$body-background-dark};
@@ -280,6 +284,8 @@ $audio-path-stroke-dark: #df4c77;
   --button-mode-position: #{$button-mode-position-dark};
 
   --amount-header-color: #{$amount-header-color-dark};
+
+  --spinner-path-stroke: #{$spinner-path-stroke-dark};
 
   --item-title-color: #{$item-title-color-dark};
 
