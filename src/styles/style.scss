@@ -1,8 +1,10 @@
 //@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto+Condensed:wght@400;700&display=swap');
 @import 'reset';
-@import 'music_item';
-@import 'links';
-@import 'light_mode_colors';
+@import 'lightModeColors';
+@import 'darkModeColors';
+@import 'musicItem';
+@import 'audioContainer';
+@import 'modalContainer';
 
 :root {
   font-size: 62.5%;
@@ -31,10 +33,7 @@ body {
   font-family: 'Roboto Condensed', sans-serif;
 }
 
-.modal--opened {
-  position: fixed;
-}
-
+// only for screen readers to stay visible
 .sr-only {
   border: 0;
   clip: rect(0, 0, 0, 0);
@@ -120,6 +119,8 @@ body {
   opacity: 0.8;
   align-items: center;
   color: white;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
   outline: none;
   font-family: 'Lobster', cursive;
   font-size: 2rem;
@@ -174,7 +175,7 @@ body {
 
 .header_search:focus-within .search_input {
   color: var(--search-color-focused);
-  font-weight: 700;
+  font-weight: var(--search-font-weight-focused);
 }
 
 .header_search:focus-within .search_icon {
@@ -201,6 +202,7 @@ body {
   width: calc(100% - 4.5rem);
   color: white;
   font-family: 'Roboto Condensed', sans-serif;
+
   &::placeholder {
     color: white;
   }
@@ -229,11 +231,9 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
   cursor: pointer;
-  &:hover {
-    background: var(--search-item-hover);
-  }
+
+  &:hover,
   &:focus {
     background: var(--search-item-hover);
   }
@@ -247,7 +247,7 @@ body {
   }
 }
 
-.button_group {
+.header_buttons {
   display: flex;
   justify-content: space-around;
   width: 35vw;
@@ -306,11 +306,11 @@ body {
 
 .items_container {
   opacity: 0;
-}
 
-.visible {
-  transition: opacity 0.5s ease;
-  opacity: 1;
+  &--visible {
+    transition: opacity 0.5s ease;
+    opacity: 1;
+  }
 }
 
 .amount_header {
@@ -321,7 +321,7 @@ body {
   color: var(--amount-header-color);
 }
 
-.spinner {
+.loader {
   position: fixed;
   opacity: 0;
   top: 50%;
@@ -332,17 +332,17 @@ body {
   fill: white;
   stroke: white;
   transform: translate(-50%, -50%) scale(0);
+
+  &--visible {
+    transition: opacity 1s 0s ease-out, transform 0s 1s ease-out;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    animation: spinning 2s forwards infinite cubic-bezier(0, 0.7, 1, 0.39);
+  }
 }
 
-.spinner_path {
-  stroke: var(--spinner-path-stroke);
-}
-
-.spinner--visible {
-  transition: opacity 1s 0s ease-out, transform 0s 1s ease-out;
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-  animation: spinning 2s forwards infinite cubic-bezier(0, 0.7, 1, 0.39);
+.loader_path {
+  stroke: var(--loader-path-stroke);
 }
 
 @keyframes spinning {
@@ -351,271 +351,6 @@ body {
   }
   to {
     transform: scale(1) translate(-50%, -50%) rotate(720deg);
-  }
-}
-
-.modal_container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: var(--modal-container-background);
-  display: flex;
-  transform: scale(0);
-  opacity: 0;
-  z-index: 10;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.3s ease-out, transform 0s 0.3s ease-out;
-}
-
-.modal_container--visible {
-  display: flex;
-  transform: scale(1);
-  opacity: 1;
-  transition: opacity 0.3s ease-out, transform 0s 0s ease-out;
-}
-
-.modal_overflow {
-  max-height: 100%;
-  overflow: auto;
-  position: relative;
-  width: 100%;
-  height: 45rem;
-}
-
-.modal {
-  position: relative;
-  width: 27rem;
-  height: 44rem;
-  margin: 0 auto;
-  background: rgb(0, 0, 0);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 4px 4px 4px 0 var(--modal-box-shadow);
-
-  .modal_image {
-    width: 100%;
-    height: auto;
-  }
-
-  .modal_data {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 1.8rem 1.8rem 4.5rem;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    background-image: url('../assets/modal_background_image.svg'),
-      var(--modal-background);
-
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-position: bottom center, center center, top center;
-
-    .data_title {
-      color: var(--data-title-color);
-      font-weight: 700;
-      font-size: 1.1rem;
-      font-family: 'Roboto Condensed', sans-serif;
-      text-transform: uppercase;
-      width: 30%;
-      padding-top: 0.5rem;
-    }
-    .data_content {
-      color: var(--data-content-color);
-      font-weight: 700;
-      font-size: 1.6rem;
-      line-height: 1.2;
-      font-family: 'Roboto Condensed', sans-serif;
-      width: 65%;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .data_content--background {
-      background-image: url(../assets/stars_group.png);
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-
-    .data_content--foreground {
-      background-image: url(../assets/stars_group_filled.png);
-      background-size: contain;
-      background-repeat: no-repeat;
-      height: 100%;
-    }
-
-    .data_link {
-      position: relative;
-      display: inline-block;
-      color: var(--data-content-color);
-      font-weight: 700;
-      font-size: 1.6rem;
-
-      transform: translate(1.9rem, 0.2rem);
-
-      &:focus,
-      &:hover {
-        text-decoration: underline;
-      }
-      &:focus::before,
-      &:hover::before {
-        transform: scale(1.05);
-      }
-    }
-
-    .data_link::before {
-      content: '';
-      background-image: url(../assets/link_icons.svg);
-      width: 1.4rem;
-      height: 1.4rem;
-      background-position: var(--link-icon-position);
-      background-repeat: no-repeat;
-      background-size: cover;
-      display: block;
-      position: absolute;
-      left: -1.9rem;
-      top: 0.2rem;
-    }
-  }
-
-  .modal_data--explicit {
-    &::after {
-      content: 'explicit';
-      display: block;
-      position: absolute;
-      background: var(--explicit-background);
-      width: 8rem;
-      height: 2rem;
-      border-bottom-left-radius: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-transform: uppercase;
-      top: 0;
-      right: 0;
-      z-index: 10;
-      font-weight: 700;
-      color: var(--explicit-text);
-    }
-  }
-
-  .data_entry {
-    display: flex;
-    margin-bottom: 0.5rem;
-    justify-content: space-between;
-  }
-
-  .buttons_group {
-    display: flex;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 1.6rem 1.2rem;
-  }
-
-  .back_button {
-    background: none;
-    background-image: url(../assets/back_buttons.svg);
-    opacity: 0.4;
-    background-position: var(--back-button-position);
-    background-size: cover;
-    width: 3rem;
-    height: 3rem;
-    border: none;
-    outline: none;
-    &:hover,
-    &:focus,
-    &:active {
-      opacity: 0.8;
-      transform: scale(1.05);
-    }
-  }
-
-  .like_button {
-    background: none;
-    background-image: url(../assets/heart_icons.svg);
-    background-position-x: var(--like-button-position);
-    background-position-y: top;
-    background-repeat: no-repeat;
-    background-size: 200% 300%;
-    width: 2.7rem;
-    height: 2.7rem;
-    border: none;
-    outline: none;
-    &:hover,
-    &:focus,
-    &:active {
-      background-position-y: center;
-    }
-  }
-}
-
-.audio_container {
-  position: absolute;
-  opacity: 0.6;
-  width: 10rem;
-  height: 10rem;
-  z-index: 5;
-  background: var(--audio-container-background);
-  border-radius: 50%;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  display: none;
-
-  &--visible {
-    display: flex;
-  }
-
-  &:hover,
-  &:focus-within {
-    opacity: 1;
-    box-shadow: 0 0 10rem 0 rgba(0, 0, 0, 0.5);
-  }
-
-  .audio_svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform-origin: center center;
-    transform: scale(1.01) rotate(-90deg);
-  }
-
-  .audio_button {
-    background: none;
-    background-image: url(../assets/audio_buttons.svg);
-    width: 10rem;
-    height: 10rem;
-    padding: 0;
-    margin: 0;
-    border: none;
-    outline: none;
-    border-radius: 50%;
-    background-position-x: var(--audio-button-position);
-    background-position-y: top;
-    z-index: 10;
-  }
-
-  .audio_path {
-    stroke: var(--audio-path-stroke);
-  }
-
-  .audio_button--playing {
-    background-position-y: bottom;
   }
 }
 
@@ -668,6 +403,7 @@ body {
   body {
     padding-top: 13rem;
   }
+
   .header {
     height: 11rem;
   }
@@ -713,17 +449,17 @@ body {
     padding-bottom: 1.6rem;
   }
 
-  .button_group {
+  .header_buttons {
     width: 30vw;
   }
 
   .header_button {
     width: 4rem;
     height: 4rem;
+  }
 
-    .button_quantity {
-      font-size: 1.8rem;
-    }
+  .button_quantity {
+    font-size: 1.8rem;
   }
 
   .amount_header {
@@ -816,7 +552,7 @@ body {
     font-size: 2.4rem;
   }
 
-  .button_group {
+  .header_buttons {
     width: 22rem;
     margin: 0 2rem;
   }
@@ -838,44 +574,53 @@ body {
     width: 36rem;
     height: 55rem;
     box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.3);
+  }
 
-    .modal_data {
-      padding-bottom: 5.5rem;
+  .modal_data {
+    padding-bottom: 5.5rem;
+  }
 
-      .data_title {
-        font-size: 1.6rem;
-        width: 35%;
-      }
+  .data_title {
+    font-size: 1.6rem;
+    width: 35%;
+  }
 
-      .data_content {
-        font-size: 2rem;
-      }
+  .data_content {
+    font-size: 2rem;
+  }
 
-      .data_link {
-        font-size: 2rem;
-        transform: translate(2.4rem, 0.2rem);
+  .data_link {
+    font-size: 2rem;
+    transform: translate(2.4rem, 0.2rem);
 
-        &::before {
-          width: 2rem;
-          height: 2rem;
-          left: -2.4rem;
-        }
-      }
+    &::before {
+      width: 2rem;
+      height: 2rem;
+      left: -2.4rem;
     }
+  }
 
-    .buttons_group {
-      padding: 0 1.8rem 1.5rem;
+  .modal_data--explicit {
+    &::after {
+      width: 12rem;
+      height: 3rem;
+      border-bottom-left-radius: 3rem;
+      font-size: 1.6rem;
     }
+  }
 
-    .back_button {
-      width: 4rem;
-      height: 4rem;
-    }
+  .buttons_group {
+    padding: 0 1.8rem 1.5rem;
+  }
 
-    .like_button {
-      width: 3.7rem;
-      height: 3.7rem;
-    }
+  .back_button {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .like_button {
+    width: 3.7rem;
+    height: 3.7rem;
   }
 
   .footer {
@@ -899,6 +644,7 @@ body {
     padding-top: 7rem;
     background-size: auto;
   }
+
   .header {
     height: 5rem;
     justify-content: space-between;
@@ -934,25 +680,22 @@ body {
     font-size: 1.4rem;
   }
 
-  .button_group {
+  .header_buttons {
     width: 12rem;
   }
 
   .header_button {
     width: 3rem;
     height: 3rem;
+  }
 
-    .button_quantity {
-      font-size: unset;
-    }
+  .button_quantity {
+    font-size: unset;
   }
 
   .footer {
     display: none;
   }
-}
-
-@media (max-width: 823px) and (orientation: landscape) {
 }
 
 @media (min-width: 840px) {
@@ -1029,7 +772,6 @@ body {
 
   .amount_header {
     font-size: 4rem;
-    //margin-left: 2rem;
   }
 
   .item {
@@ -1053,7 +795,6 @@ body {
     font-size: 2.2rem;
     border-width: 0.2rem;
     padding: 0.6rem 2.8rem;
-    //color: rgba(0, 0, 0, 0.5);
   }
 
   .item_button--like {
@@ -1070,10 +811,18 @@ body {
     height: 62rem;
     border-radius: 3rem;
   }
+
+  .modal_data--explicit {
+    &::after {
+      width: 16rem;
+      height: 4rem;
+      font-size: 1.8rem;
+    }
+  }
 }
 
 @media (min-width: 1700px) {
-  .button_group {
+  .header_buttons {
     width: 35rem;
   }
 
@@ -1092,181 +841,42 @@ body {
   .modal {
     width: 52rem;
     height: 77rem;
+  }
 
-    .modal_data {
-      padding: 2.8rem 2.8rem 9rem;
+  .modal_data {
+    padding: 2.8rem 2.8rem 9rem;
+  }
 
-      .data_title {
-        font-size: 2.2rem;
-      }
+  .data_title {
+    font-size: 2.2rem;
+  }
 
-      .data_content {
-        font-size: 2.6rem;
-      }
+  .data_content {
+    font-size: 2.6rem;
+  }
 
-      .data_link {
-        font-size: 2.6rem;
-        transform: translate(3rem, 0.2rem);
+  .data_link {
+    font-size: 2.6rem;
+    transform: translate(3rem, 0.2rem);
 
-        &::before {
-          width: 2.6rem;
-          height: 2.6rem;
-          left: -3rem;
-        }
-      }
-    }
-
-    .buttons_group {
-      padding: 0 2.8rem 2rem;
-    }
-
-    .back_button {
-      width: 5.5rem;
-      height: 5.5rem;
-    }
-
-    .like_button {
-      width: 5.2rem;
-      height: 5.2rem;
+    &::before {
+      width: 2.6rem;
+      height: 2.6rem;
+      left: -3rem;
     }
   }
-}
 
-@media (prefers-color-scheme: dark) {
-  /* Dark theme styles go here */
-  :root {
-    --body-background: #{$body-background-dark};
-
-    --header-background: #{$header-background-dark};
-
-    --header-triangle-position: #{$header-triangle-position-dark};
-
-    --footer-background: #{$footer-background-dark};
-
-    --footer-triangle-position: #{$footer-triangle-position-dark};
-
-    --search-background-focused: #{$search-background-focused-dark};
-
-    --search-list-background: #{$search-list-background-dark};
-
-    --search-color-focused: #{$search-color-focused-dark};
-
-    --search-list-color: #{$search-list-color-dark};
-
-    --search-list-box-shadow: #{$search-list-box-shadow-dark};
-
-    --search-item-hover: #{$search-item-hover-dark};
-
-    --button-mode-position: #{$button-mode-position-dark};
-
-    --amount-header-color: #{$amount-header-color-dark};
-
-    --spinner-path-stroke: #{$spinner-path-stroke-dark};
-
-    --item-title-color: #{$item-title-color-dark};
-
-    --item-subtitle-color: #{$item-subtitle-color-dark};
-
-    --item-info-button-color: #{$item-info-button-color-dark};
-
-    --item-like-button-position: #{$item-like-button-position-dark};
-
-    --item-background: #{$item-background-dark};
-
-    --item-box-shadow: #{$item-box-shadow-dark};
-
-    --modal-container-background: #{$modal-container-background-dark};
-
-    --modal-box-shadow: #{$modal-box-shadow-dark};
-
-    --modal-background: #{$modal-background-dark};
-
-    --data-title-color: #{$data-title-color-dark};
-
-    --data-content-color: #{$data-content-color-dark};
-
-    --link-icon-position: #{$link-icon-position-dark};
-
-    --explicit-text: #{$explicit-text-dark};
-
-    --explicit-background: #{$explicit-background-dark};
-
-    --back-button-position: #{$back-button-position-dark};
-
-    --like-button-position: #{$like-button-position-dark};
-
-    --audio-container-background: #{$audio-container-background-dark};
-
-    --audio-button-position: #{$audio-button-position-dark};
-
-    --audio-path-stroke: #{$audio-path-stroke-dark};
+  .buttons_group {
+    padding: 0 2.8rem 2rem;
   }
-}
 
-.light_mode {
-  --body-background: #{$body-background-light};
+  .back_button {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
 
-  --header-background: #{$header-background-light};
-
-  --header-triangle-position: #{$header-triangle-position-light};
-
-  --footer-background: #{$footer-background-light};
-
-  --footer-triangle-position: #{$footer-triangle-position-light};
-
-  --search-background-focused: #{$search-background-focused-light};
-
-  --search-list-background: #{$search-list-background-light};
-
-  --search-color-focused: #{$search-color-focused-light};
-
-  --search-list-color: #{$search-list-color-light};
-
-  --search-list-box-shadow: #{$search-list-box-shadow-light};
-
-  --search-item-hover: #{$search-item-hover-light};
-
-  --button-mode-position: #{$button-mode-position-light};
-
-  --amount-header-color: #{$amount-header-color-light};
-
-  --spinner-path-stroke: #{$spinner-path-stroke-light};
-
-  --item-info-button-color: #{$item-info-button-color-light};
-
-  --item-like-button-position: #{$item-like-button-position-light};
-
-  --item-title-color: #{$item-title-color-light};
-
-  --item-subtitle-color: #{$item-subtitle-color-light};
-
-  --item-background: #{$item-background-light};
-
-  --item-box-shadow: #{$item-box-shadow-light};
-
-  --modal-container-background: #{$modal-container-background-light};
-
-  --modal-box-shadow: #{$modal-box-shadow-light};
-
-  --modal-background: #{$modal-background-light};
-
-  --data-title-color: #{$data-title-color-light};
-
-  --data-content-color: #{$data-content-color-light};
-
-  --link-icon-position: #{$link-icon-position-light};
-
-  --explicit-text: #{$explicit-text-light};
-
-  --explicit-background: #{$explicit-background-light};
-
-  --back-button-position: #{$back-button-position-light};
-
-  --like-button-position: #{$like-button-position-light};
-
-  --audio-container-background: #{$audio-container-background-light};
-
-  --audio-button-position: #{$audio-button-position-light};
-
-  --audio-path-stroke: #{$audio-path-stroke-light};
+  .like_button {
+    width: 5.2rem;
+    height: 5.2rem;
+  }
 }

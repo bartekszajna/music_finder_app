@@ -2,7 +2,6 @@ import AlbumItem from './AlbumItem';
 import ArtistItem from './ArtistItem';
 import TrackItem from './TrackItem';
 import App from './App';
-import AudioController from './AudioController';
 
 export default class UIController {
   constructor() {
@@ -17,6 +16,8 @@ export default class UIController {
     this.clickedInfoButton;
     this.firstFocusableModalElement;
     this.lastFocusableModalElement;
+    this.showLoader;
+    this.hideLoader;
     this.audioContainerElement = document.querySelector('.audio_container');
     this.itemsContainer = document.querySelector('.items_container');
     this.modalContainer = document.querySelector('.modal_container');
@@ -34,15 +35,23 @@ export default class UIController {
     );
   }
 
+  showItemsContainer() {
+    this.itemsContainer.classList.add('items_container--visible');
+  }
+
+  hideItemsContainer() {
+    this.itemsContainer.classList.remove('items_container--visible');
+  }
+
+  clearItemsContainer() {
+    this.itemsContainer.innerHTML = '';
+  }
+
   closeModal() {
-    console.log('XD');
-    //this.audioContainerElement.classList.remove('audio_container--visible');
     this.modalContainer.classList.remove('modal_container--visible');
     this.modalDataElement.classList.remove('modal_data--explicit');
     this.modalDataElement.innerHTML = '';
-    //this.audioElement.src = 'null';
     this.audioController.remove();
-    document.body.classList.remove('modal--opened');
 
     const scrollY = document.body.style.top;
     document.body.style.position = '';
@@ -51,9 +60,6 @@ export default class UIController {
     document.body.style.paddingRight = '20px';
 
     document.querySelector('.modal_overflow').style.marginRight = '';
-
-    //document.documentElement.classList.remove('modal--opened');
-    //document.html.classList.remove('modal--opened');
 
     this.modalContainer.removeEventListener(
       'click',
@@ -90,7 +96,6 @@ export default class UIController {
         switch (group) {
           case 'albums': {
             obj = new AlbumItem(
-              //item.type,
               'Album',
               item.name,
               item.id,
@@ -105,7 +110,6 @@ export default class UIController {
           }
           case 'artists': {
             obj = new ArtistItem(
-              //item.type,
               'Artist',
               item.name,
               item.id,
@@ -119,7 +123,6 @@ export default class UIController {
           }
           case 'tracks': {
             obj = new TrackItem(
-              //item.type,
               'Song',
               item.name,
               item.id,
@@ -136,24 +139,17 @@ export default class UIController {
             break;
           }
         }
-        // here we switch the position of albums and artists so the latter come first
-        // default order would be to albums go first
-        // if (obj.type === 'Artist') {
-        //   listOfItems.unshift(obj);
-        // } else {
-        //   listOfItems.push(obj);
-        // }
 
         listOfItems.push(obj);
       });
     }
+
     listOfItems.sort((a, b) => {
       if (a.Popularity < b.Popularity) return 1;
       if (a.Type === 'Artist') return -1;
       if (b.Type === 'Artist') return 1;
     });
     this.listOfItems = listOfItems;
-    console.log(this.listOfItems);
     return totalItemsAmount;
   }
 
@@ -193,6 +189,11 @@ export default class UIController {
         'beforeEnd',
         `<p class="amount_header">No results available</p>`
       );
+
+      this.hideLoader();
+
+      this.showItemsContainer();
+
       return;
     }
 
@@ -200,11 +201,12 @@ export default class UIController {
       if (this.intersectionObserverObject instanceof IntersectionObserver) {
         this.intersectionObserverObject.disconnect();
       }
+
+      this.hideLoader();
       return;
     }
 
     let arrayOfPromises = await this.loadAllImages();
-    console.log(arrayOfPromises);
 
     arrayOfPromises.forEach((promise) => {
       let item = document.createElement('div');
@@ -257,11 +259,10 @@ export default class UIController {
         `<p class="amount_header">${totalItemsAmount} total results</p>`
       );
     }
-    const spinner = document.querySelector('.spinner');
-    spinner.classList.remove('spinner--visible');
+    this.hideLoader();
 
-    this.itemsContainer.classList.add('visible');
-    // they are created every time the renderItemsList is evoked and accumulate unnecessary
+    this.showItemsContainer();
+    // they are created every time the renderItemsList is evoked and accumulate unnecessarily
     // which causes more data loading if we scroll through old items back and forth
     // so we need to disconnect the old observers
     if (this.intersectionObserverObject instanceof IntersectionObserver) {
@@ -274,8 +275,6 @@ export default class UIController {
     );
 
     this.suggestionsListElement.innerHTML = '';
-    //this.searchController.inputSearchElement.blur();
-    //this.container.addEventListener('click', this.renderModal.bind(this));
   }
 
   renderModal(e) {
@@ -286,11 +285,12 @@ export default class UIController {
     this.clickedInfoButton = e.target;
     let object = JSON.parse(e.target.dataset.item);
     let type = object.Type;
-    console.log(object);
+
     delete object.Id;
     delete object.Type;
     delete object.Name;
     let fragment;
+
     switch (type) {
       case 'Album': {
         fragment = this.renderAlbumModal(object);
@@ -314,8 +314,6 @@ export default class UIController {
     }px`;
 
     this.modalDataElement.insertAdjacentHTML('afterBegin', fragment);
-
-    console.log(this);
 
     this.audioElement = document.querySelector('.audio');
     this.modalAudioButtonElement = document.querySelector('.audio_button');
@@ -348,8 +346,6 @@ export default class UIController {
     this.modalContainer.addEventListener('keydown', this.detectEscapeKeydown);
 
     this.modalContainer.classList.add('modal_container--visible');
-    //document.body.classList.add('modal--opened');
-    //document.documentElement.classList.add('modal--opened');
 
     let scrolledBy = window.scrollY;
     document.body.style.top = `-${scrolledBy}px`;

@@ -1,0 +1,170 @@
+$body-background-light: linear-gradient(
+  to top,
+  rgba(227, 227, 227, 0.3),
+  rgba(227, 227, 227, 0.5)
+);
+
+$header-background-light: linear-gradient(
+  115deg,
+  rgb(0, 37, 108) 15%,
+  rgb(0, 67, 135) 33%,
+  rgb(118, 75, 132) 67%,
+  rgb(217, 66, 113)
+);
+
+$header-triangle-position-light: top center;
+
+$footer-background-light: linear-gradient(
+  115deg,
+  rgb(0, 37, 108) 15%,
+  rgb(0, 67, 135) 33%,
+  rgb(118, 75, 132) 67%,
+  rgb(217, 66, 113)
+);
+
+$footer-triangle-position-light: top center;
+
+$search-background-focused-light: rgba(white, 1);
+
+$search-list-background-light: rgb(243, 243, 243);
+
+$search-color-focused-light: rgba(0, 0, 0, 0.5);
+
+$search-font-weight-focused-light: 700;
+
+$search-list-box-shadow-light: rgba(0, 0, 0, 0.1);
+
+$search-list-color-light: rgba(0, 0, 0, 0.35);
+
+$search-item-hover-light: rgb(234, 234, 234);
+
+$button-mode-position-light: top center;
+
+$amount-header-color-light: rgb(0, 58, 127);
+
+$error-info-color-light: rgba(0, 0, 0, 0.5);
+
+$error-info-font-weight-light: 700;
+
+$loader-path-stroke-light: rgb(0, 58, 127);
+
+$item-title-color-light: rgba(0, 0, 0, 0.5);
+
+$item-subtitle-color-light: #00276d;
+
+$item-info-button-color-light: rgba(0, 0, 0, 0.4);
+
+$item-like-button-position-light: left;
+
+$item-background-light: white;
+
+$item-box-shadow-light: rgba(0, 0, 0, 0.1);
+
+$modal-container-background-light: rgba(0, 0, 0, 0.2);
+
+$modal-box-shadow-light: rgba(0, 0, 0, 0.15);
+
+$modal-background-light: linear-gradient(
+  to top,
+  #f3f3f3 0%,
+  #f3f3f3 40%,
+  rgba(#f3f3f3, 0.9) 44%,
+  rgba(#f3f3f3, 0.5) 52%,
+  rgba(#f3f3f3, 0.2) 60%,
+  rgba(#f3f3f3, 0.05) 68%,
+  rgba(#f3f3f3, 0) 100%
+);
+
+$data-title-color-light: rgba(0, 0, 0, 0.7);
+
+$data-content-color-light: rgb(0, 39, 109);
+
+$link-icon-position-light: top center;
+
+$explicit-background-light: white;
+
+$explicit-text-light: rgba(0, 0, 0, 0.4);
+
+$back-button-position-light: top center;
+
+$like-button-position-light: left;
+
+$audio-container-background-light: rgba(255, 255, 255, 0.7);
+
+$audio-button-position-light: left;
+
+$audio-path-stroke-light: #00256c;
+
+.light_mode {
+  --body-background: #{$body-background-light};
+
+  --header-background: #{$header-background-light};
+
+  --header-triangle-position: #{$header-triangle-position-light};
+
+  --footer-background: #{$footer-background-light};
+
+  --footer-triangle-position: #{$footer-triangle-position-light};
+
+  --search-background-focused: #{$search-background-focused-light};
+
+  --search-list-background: #{$search-list-background-light};
+
+  --search-color-focused: #{$search-color-focused-light};
+
+  --search-font-weight-focused: #{$search-font-weight-focused-light};
+
+  --search-list-color: #{$search-list-color-light};
+
+  --search-list-box-shadow: #{$search-list-box-shadow-light};
+
+  --search-item-hover: #{$search-item-hover-light};
+
+  --button-mode-position: #{$button-mode-position-light};
+
+  --amount-header-color: #{$amount-header-color-light};
+
+  --error-info-color: #{$error-info-color-light};
+
+  --error-info-font-weight: #{$error-info-font-weight-light};
+
+  --loader-path-stroke: #{$loader-path-stroke-light};
+
+  --item-info-button-color: #{$item-info-button-color-light};
+
+  --item-like-button-position: #{$item-like-button-position-light};
+
+  --item-title-color: #{$item-title-color-light};
+
+  --item-subtitle-color: #{$item-subtitle-color-light};
+
+  --item-background: #{$item-background-light};
+
+  --item-box-shadow: #{$item-box-shadow-light};
+
+  --modal-container-background: #{$modal-container-background-light};
+
+  --modal-box-shadow: #{$modal-box-shadow-light};
+
+  --modal-background: #{$modal-background-light};
+
+  --data-title-color: #{$data-title-color-light};
+
+  --data-content-color: #{$data-content-color-light};
+
+  --link-icon-position: #{$link-icon-position-light};
+
+  --explicit-text: #{$explicit-text-light};
+
+  --explicit-background: #{$explicit-background-light};
+
+  --back-button-position: #{$back-button-position-light};
+
+  --like-button-position: #{$like-button-position-light};
+
+  --audio-container-background: #{$audio-container-background-light};
+
+  --audio-button-position: #{$audio-button-position-light};
+
+  --audio-path-stroke: #{$audio-path-stroke-light};
+}

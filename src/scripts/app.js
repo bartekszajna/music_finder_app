@@ -41,15 +41,30 @@ export default class App {
       suggestionsList
     );
 
+    searchController.hideItemsContainer = uiController.hideItemsContainer.bind(
+      uiController
+    );
+
+    searchController.clearItemsContainer = uiController.clearItemsContainer.bind(
+      uiController
+    );
+
     uiController.searchController = searchController;
     uiController.suggestionsListElement =
       suggestionsList.suggestionsListElement;
 
     uiController.audioController = audioController;
+    uiController.showLoader = searchController.showLoader.bind(
+      searchController
+    );
+    uiController.hideLoader = searchController.hideLoader.bind(
+      searchController
+    );
 
     modeController.systemModeHandler();
     modeController.storageModeHandler();
 
+    this.displayWidthHandler();
     this.addBodyClickListener(searchController);
     this.preventWindowArrowScroll();
   }
@@ -63,7 +78,6 @@ export default class App {
       ) {
         return;
       } else {
-        console.log('works');
         searchController.formSearchElement.dispatchEvent(
           new Event('submit', { cancelable: true })
         );
@@ -92,7 +106,6 @@ export default class App {
         let event = new Event('submit', { cancelable: true });
         event.loadOnScroll = true;
         searchController.formSearchElement.dispatchEvent(event);
-        console.log('XD');
       }
     }
 
@@ -101,5 +114,36 @@ export default class App {
       .lastElementChild;
     observer.observe(target);
     return observer;
+  }
+
+  static displayWidthHandler() {
+    const mediaQueryObject = window.matchMedia('(min-width: 1200px)');
+
+    const searchInput = document.querySelector('.search_input');
+    const headerButtons = document.querySelectorAll('.button_text');
+
+    if (mediaQueryObject.matches) {
+      searchInput.setAttribute(
+        'placeholder',
+        'Search for album, artist or song...'
+      );
+      headerButtons.forEach((button) => button.classList.remove('sr-only'));
+    } else {
+      searchInput.setAttribute('placeholder', 'Album, artist or song...');
+      headerButtons.forEach((button) => button.classList.add('sr-only'));
+    }
+
+    mediaQueryObject.addEventListener('change', function (e) {
+      if (e.matches) {
+        searchInput.setAttribute(
+          'placeholder',
+          'Search for album, artist or song...'
+        );
+        headerButtons.forEach((button) => button.classList.remove('sr-only'));
+      } else {
+        searchInput.setAttribute('placeholder', 'Album, artist or song...');
+        headerButtons.forEach((button) => button.classList.add('sr-only'));
+      }
+    });
   }
 }

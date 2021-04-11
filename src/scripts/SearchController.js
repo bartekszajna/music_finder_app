@@ -1,15 +1,16 @@
 import App from './App';
-const spinner = document.querySelector('.spinner');
-const container = document.querySelector('.container');
+
 export default class SearchController {
   constructor() {
     this.fetchedDataOffset = 0;
     this.previousInputValue = '';
-    this.itemsContainer;
     this.suggestionsListElement;
+    this.hideItemsContainer;
+    this.clearItemsContainer;
     this.formSearchElement = document.querySelector('.header_search');
     this.inputSearchElement = document.querySelector('.search_input');
     this.fetchAddress = 'https://warm-temple-70787.herokuapp.com/search?q=';
+    this.loaderElement = document.querySelector('.loader');
 
     this.inputSearchElement.addEventListener(
       'input',
@@ -27,8 +28,15 @@ export default class SearchController {
     );
   }
 
+  showLoader() {
+    this.loaderElement.classList.add('loader--visible');
+  }
+
+  hideLoader() {
+    this.loaderElement.classList.remove('loader--visible');
+  }
+
   async submissionHandler(e) {
-    console.log(this.fetchedDataOffset);
     e.preventDefault();
     this.inputSearchElement.blur();
 
@@ -54,21 +62,22 @@ export default class SearchController {
     }
 
     if (this.fetchedDataOffset === 0) {
-      this.itemsContainer.classList.remove('visible');
-      this.itemsContainer.innerHTML = '';
+      this.hideItemsContainer();
+      this.clearItemsContainer();
       window.scrollTo(0, 0);
     }
-    console.log('fetching');
+
     this.previousInputValue = inputValue;
 
     this.suggestionsListElement.innerText = '';
 
     // here comes the whole logic behind fetching all the tiles
-    spinner.classList.add('spinner--visible');
+    this.showLoader();
+
     const data = await this.fetchData(inputValue, this.fetchedDataOffset);
     // here can come data actually being an error JSON, like 404 or 429
     // so remember to implement fallback for this situation
-    console.log(data);
+
     const totalItemsAmount = this.prepareItems(data);
 
     this.renderItemsList(totalItemsAmount, this.fetchedDataOffset);
@@ -81,11 +90,9 @@ export default class SearchController {
       return;
     }
     if (e.code === 'ArrowUp') {
-      //console.log(e);
       this.suggestionsListElement.lastElementChild.focus();
     }
     if (e.code === 'ArrowDown') {
-      //console.log(e);
       this.suggestionsListElement.firstElementChild.focus();
     }
   }

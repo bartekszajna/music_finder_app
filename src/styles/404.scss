@@ -1,7 +1,7 @@
 //@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto+Condensed:wght@400;700&display=swap');
 @import 'reset';
-@import 'links';
-@import 'light_mode_colors';
+@import 'lightModeColors';
+@import 'darkModeColors';
 
 :root {
   font-size: 62.5%;
@@ -64,8 +64,9 @@ body {
 }
 
 .error_info {
-  color: white;
+  color: var(--error-info-color);
   font-size: 1.6rem;
+  font-weight: var(--error-info-font-weight);
   text-align: center;
   line-height: 1.2;
   margin-bottom: 1.5rem;
@@ -75,6 +76,10 @@ body {
   opacity: 0.7;
   font-size: 1.6rem;
   padding: 0.9rem 2.7rem;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+  outline: none;
+  color: white;
   background-color: #00256c;
   border-radius: 3rem;
   &:hover {
@@ -120,6 +125,11 @@ body {
 @media (min-width: 460px) {
   body {
     background-size: 60%, 100%;
+    padding-top: 20rem;
+  }
+
+  .error_info {
+    font-size: 2.2rem;
   }
 }
 
@@ -148,7 +158,7 @@ body {
   }
 
   .error_info {
-    font-size: 2.4rem;
+    font-size: 2.6rem;
     margin-bottom: 2rem;
   }
 
@@ -191,142 +201,4 @@ body {
   .header {
     height: 7.5rem;
   }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --body-background: #{$body-background-dark};
-
-    --header-background: #{$header-background-dark};
-
-    --header-triangle-position: #{$header-triangle-position-dark};
-
-    --footer-background: #{$footer-background-dark};
-
-    --footer-triangle-position: #{$footer-triangle-position-dark};
-
-    --search-background-focused: #{$search-background-focused-dark};
-
-    --search-list-background: #{$search-list-background-dark};
-
-    --search-color-focused: #{$search-color-focused-dark};
-
-    --search-list-color: #{$search-list-color-dark};
-
-    --search-list-box-shadow: #{$search-list-box-shadow-dark};
-
-    --search-item-hover: #{$search-item-hover-dark};
-
-    --button-mode-position: #{$button-mode-position-dark};
-
-    --amount-header-color: #{$amount-header-color-dark};
-
-    --spinner-path-stroke: #{$spinner-path-stroke-dark};
-
-    --item-title-color: #{$item-title-color-dark};
-
-    --item-subtitle-color: #{$item-subtitle-color-dark};
-
-    --item-info-button-color: #{$item-info-button-color-dark};
-
-    --item-like-button-position: #{$item-like-button-position-dark};
-
-    --item-background: #{$item-background-dark};
-
-    --item-box-shadow: #{$item-box-shadow-dark};
-
-    --modal-container-background: #{$modal-container-background-dark};
-
-    --modal-box-shadow: #{$modal-box-shadow-dark};
-
-    --modal-background: #{$modal-background-dark};
-
-    --data-title-color: #{$data-title-color-dark};
-
-    --data-content-color: #{$data-content-color-dark};
-
-    --link-icon-position: #{$link-icon-position-dark};
-
-    --explicit-text: #{$explicit-text-dark};
-
-    --explicit-background: #{$explicit-background-dark};
-
-    --back-button-position: #{$back-button-position-dark};
-
-    --like-button-position: #{$like-button-position-dark};
-
-    --audio-container-background: #{$audio-container-background-dark};
-
-    --audio-button-position: #{$audio-button-position-dark};
-
-    --audio-path-stroke: #{$audio-path-stroke-dark};
-  }
-}
-
-.light_mode {
-  --body-background: #{$body-background-light};
-
-  --header-background: #{$header-background-light};
-
-  --header-triangle-position: #{$header-triangle-position-light};
-
-  --footer-background: #{$footer-background-light};
-
-  --footer-triangle-position: #{$footer-triangle-position-light};
-
-  --search-background-focused: #{$search-background-focused-light};
-
-  --search-list-background: #{$search-list-background-light};
-
-  --search-color-focused: #{$search-color-focused-light};
-
-  --search-list-color: #{$search-list-color-light};
-
-  --search-list-box-shadow: #{$search-list-box-shadow-light};
-
-  --search-item-hover: #{$search-item-hover-light};
-
-  --button-mode-position: #{$button-mode-position-light};
-
-  --amount-header-color: #{$amount-header-color-light};
-
-  --spinner-path-stroke: #{$spinner-path-stroke-light};
-
-  --item-info-button-color: #{$item-info-button-color-light};
-
-  --item-like-button-position: #{$item-like-button-position-light};
-
-  --item-title-color: #{$item-title-color-light};
-
-  --item-subtitle-color: #{$item-subtitle-color-light};
-
-  --item-background: #{$item-background-light};
-
-  --item-box-shadow: #{$item-box-shadow-light};
-
-  --modal-container-background: #{$modal-container-background-light};
-
-  --modal-box-shadow: #{$modal-box-shadow-light};
-
-  --modal-background: #{$modal-background-light};
-
-  --data-title-color: #{$data-title-color-light};
-
-  --data-content-color: #{$data-content-color-light};
-
-  --link-icon-position: #{$link-icon-position-light};
-
-  --explicit-text: #{$explicit-text-light};
-
-  --explicit-background: #{$explicit-background-light};
-
-  --back-button-position: #{$back-button-position-light};
-
-  --like-button-position: #{$like-button-position-light};
-
-  --audio-container-background: #{$audio-container-background-light};
-
-  --audio-button-position: #{$audio-button-position-light};
-
-  --audio-path-stroke: #{$audio-path-stroke-light};
 }

@@ -1,0 +1,57 @@
+.audio_container {
+  position: absolute;
+  opacity: 0.6;
+  width: 10rem;
+  height: 10rem;
+  z-index: 5;
+  background: var(--audio-container-background);
+  border-radius: 50%;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+
+  &--visible {
+    display: flex;
+  }
+
+  &:hover,
+  &:focus-within {
+    opacity: 1;
+    box-shadow: 0 0 10rem 0 rgba(0, 0, 0, 0.5);
+  }
+}
+
+.audio_svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: center center;
+  transform: scale(1.01) rotate(-90deg);
+}
+
+.audio_button {
+  background: none;
+  background-image: url(../assets/audio_buttons.svg);
+  width: 10rem;
+  height: 10rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  background-position-x: var(--audio-button-position);
+  background-position-y: top;
+  z-index: 10;
+}
+
+.audio_path {
+  stroke: var(--audio-path-stroke);
+}
+
+.audio_button--playing {
+  background-position-y: bottom;
+}

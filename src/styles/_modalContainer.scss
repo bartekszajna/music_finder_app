@@ -1,0 +1,211 @@
+.modal_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--modal-container-background);
+  display: flex;
+  transform: scale(0);
+  opacity: 0;
+  z-index: 10;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease-out, transform 0s 0.3s ease-out;
+
+  &--visible {
+    display: flex;
+    transform: scale(1);
+    opacity: 1;
+    transition: opacity 0.3s ease-out, transform 0s 0s ease-out;
+  }
+}
+
+.modal_overflow {
+  max-height: 100%;
+  overflow: auto;
+  position: relative;
+  width: 100%;
+  height: 45rem;
+}
+
+.modal {
+  position: relative;
+  width: 27rem;
+  height: 44rem;
+  margin: 0 auto;
+  background: rgb(0, 0, 0);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 4px 4px 4px 0 var(--modal-box-shadow);
+}
+
+.modal_image {
+  width: 100%;
+  height: auto;
+}
+
+.modal_data {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.8rem 1.8rem 4.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-image: url('../assets/modal_background_image.svg'),
+    var(--modal-background);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: bottom center, center center, top center;
+}
+
+.data_title {
+  color: var(--data-title-color);
+  font-weight: 700;
+  font-size: 1.1rem;
+  font-family: 'Roboto Condensed', sans-serif;
+  text-transform: uppercase;
+  width: 30%;
+  padding-top: 0.5rem;
+}
+
+.data_content {
+  color: var(--data-content-color);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  font-family: 'Roboto Condensed', sans-serif;
+  width: 65%;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.data_content--background {
+  background-image: url(../assets/stars_group.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.data_content--foreground {
+  background-image: url(../assets/stars_group_filled.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+
+.data_link {
+  position: relative;
+  display: inline-block;
+  color: var(--data-content-color);
+  font-weight: 700;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+  outline: none;
+  font-size: 1.6rem;
+  transform: translate(1.9rem, 0.2rem);
+
+  &:focus,
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus::before,
+  &:hover::before {
+    transform: scale(1.05);
+  }
+
+  &::before {
+    content: '';
+    background-image: url(../assets/link_icons.svg);
+    width: 1.4rem;
+    height: 1.4rem;
+    background-position: var(--link-icon-position);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block;
+    position: absolute;
+    left: -1.9rem;
+    top: 0.2rem;
+  }
+}
+
+.modal_data--explicit {
+  &::after {
+    content: 'explicit';
+    display: block;
+    position: absolute;
+    background: var(--explicit-background);
+    width: 8rem;
+    height: 2rem;
+    border-bottom-left-radius: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    font-weight: 700;
+    color: var(--explicit-text);
+  }
+}
+
+.data_entry {
+  display: flex;
+  margin-bottom: 0.5rem;
+  justify-content: space-between;
+}
+
+.buttons_group {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.6rem 1.2rem;
+}
+
+.back_button {
+  background: none;
+  background-image: url(../assets/back_buttons.svg);
+  opacity: 0.4;
+  background-position: var(--back-button-position);
+  background-size: cover;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  outline: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.like_button {
+  background: none;
+  background-image: url(../assets/heart_icons.svg);
+  background-position-x: var(--like-button-position);
+  background-position-y: top;
+  background-repeat: no-repeat;
+  background-size: 200% 300%;
+  width: 2.7rem;
+  height: 2.7rem;
+  border: none;
+  outline: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-position-y: center;
+  }
+}

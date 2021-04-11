@@ -1,0 +1,182 @@
+$body-background-dark: linear-gradient(
+  to top,
+  rgb(17, 20, 29),
+  rgb(17, 20, 29)
+);
+
+$header-background-dark: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.6)
+  ),
+  linear-gradient(
+    115deg,
+    rgb(0, 37, 108) 15%,
+    rgb(0, 67, 135) 33%,
+    rgb(118, 75, 132) 67%,
+    rgb(217, 66, 113)
+  );
+
+$header-triangle-position-dark: bottom center;
+
+$footer-background-dark: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.6)
+  ),
+  linear-gradient(
+    115deg,
+    rgb(0, 37, 108) 15%,
+    rgb(0, 67, 135) 33%,
+    rgb(118, 75, 132) 67%,
+    rgb(217, 66, 113)
+  );
+
+$footer-triangle-position-dark: bottom center;
+
+$search-background-focused-dark: rgb(38, 55, 79);
+
+$search-list-background-dark: rgb(26, 38, 56);
+
+$search-color-focused-dark: rgba(255, 255, 255, 1);
+
+$search-font-weight-focused-dark: 500;
+
+$search-list-box-shadow-dark: rgba(0, 0, 0, 0.2);
+
+$search-list-color-dark: rgba(255, 255, 255, 0.5);
+
+$search-item-hover-dark: rgb(38, 55, 79);
+
+$button-mode-position-dark: bottom center;
+
+$amount-header-color-dark: rgb(233, 233, 234);
+
+$error-info-color-dark: rgb(233, 233, 234);
+
+$error-info-font-weight-dark: 500;
+
+$loader-path-stroke-dark: #df4c77;
+
+$item-title-color-dark: rgba(255, 255, 255, 0.65);
+
+$item-subtitle-color-dark: #df4c77;
+
+$item-info-button-color-dark: rgba(255, 255, 255, 0.4);
+
+$item-like-button-position-dark: right;
+
+$item-background-dark: #202129;
+
+$item-box-shadow-dark: rgba(0, 0, 0, 0.2);
+
+$modal-container-background-dark: rgba(0, 0, 0, 0.7);
+
+$modal-box-shadow-dark: rgba(0, 0, 0, 0.2);
+
+$modal-background-dark: linear-gradient(
+  to top,
+  #11141d 0%,
+  #11141d 38%,
+  rgba(#11141d, 0.97) 40%,
+  rgba(#11141d, 0.87) 44%,
+  rgba(#11141d, 0.67) 49%,
+  rgba(#11141d, 0.4) 54%,
+  rgba(#11141d, 0.15) 60%,
+  rgba(#11141d, 0) 65%,
+  rgba(#11141d, 0) 100%
+);
+
+$data-title-color-dark: rgba(255, 255, 255, 0.7);
+
+$data-content-color-dark: rgb(223, 76, 119);
+
+$link-icon-position-dark: bottom center;
+
+$explicit-background-dark: #11141d;
+
+$explicit-text-dark: rgba(255, 255, 255, 0.7);
+
+$back-button-position-dark: bottom center;
+
+$like-button-position-dark: right;
+
+$audio-container-background-dark: rgba(rgb(17, 20, 29), 0.7);
+
+$audio-button-position-dark: right;
+
+$audio-path-stroke-dark: #df4c77;
+
+.dark_mode {
+  --body-background: #{$body-background-dark};
+
+  --header-background: #{$header-background-dark};
+
+  --header-triangle-position: #{$header-triangle-position-dark};
+
+  --footer-background: #{$footer-background-dark};
+
+  --footer-triangle-position: #{$footer-triangle-position-dark};
+
+  --search-background-focused: #{$search-background-focused-dark};
+
+  --search-list-background: #{$search-list-background-dark};
+
+  --search-color-focused: #{$search-color-focused-dark};
+
+  --search-font-weight-focused: #{$search-font-weight-focused-dark};
+
+  --search-list-color: #{$search-list-color-dark};
+
+  --search-list-box-shadow: #{$search-list-box-shadow-dark};
+
+  --search-item-hover: #{$search-item-hover-dark};
+
+  --button-mode-position: #{$button-mode-position-dark};
+
+  --amount-header-color: #{$amount-header-color-dark};
+
+  --error-info-color: #{$error-info-color-dark};
+
+  --error-info-font-weight: #{$error-info-font-weight-dark};
+
+  --loader-path-stroke: #{$loader-path-stroke-dark};
+
+  --item-title-color: #{$item-title-color-dark};
+
+  --item-subtitle-color: #{$item-subtitle-color-dark};
+
+  --item-info-button-color: #{$item-info-button-color-dark};
+
+  --item-like-button-position: #{$item-like-button-position-dark};
+
+  --item-background: #{$item-background-dark};
+
+  --item-box-shadow: #{$item-box-shadow-dark};
+
+  --modal-container-background: #{$modal-container-background-dark};
+
+  --modal-box-shadow: #{$modal-box-shadow-dark};
+
+  --modal-background: #{$modal-background-dark};
+
+  --data-title-color: #{$data-title-color-dark};
+
+  --data-content-color: #{$data-content-color-dark};
+
+  --link-icon-position: #{$link-icon-position-dark};
+
+  --explicit-text: #{$explicit-text-dark};
+
+  --explicit-background: #{$explicit-background-dark};
+
+  --back-button-position: #{$back-button-position-dark};
+
+  --like-button-position: #{$like-button-position-dark};
+
+  --audio-container-background: #{$audio-container-background-dark};
+
+  --audio-button-position: #{$audio-button-position-dark};
+
+  --audio-path-stroke: #{$audio-path-stroke-dark};
+}
