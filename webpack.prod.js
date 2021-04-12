@@ -10,7 +10,7 @@ let config = {};
 
 config.mode = 'production';
 
-config.entry = { main: './src/scripts/index.js', 404: './src/scripts/404.js' };
+config.entry = { index: './src/scripts/index.js', 404: './src/scripts/404.js' };
 
 config.output = {
   filename: '[name].[contenthash].js',
@@ -24,18 +24,7 @@ config.performance = {
 };
 
 config.optimization = {
-  minimizer: [
-    new OptimizeCssAssetsPlugin(),
-    new TerserPlugin(),
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      minify: {
-        removeAttributeQuotes: true,
-        collapseWhitespace: true,
-        removeComments: true,
-      },
-    }),
-  ],
+  minimizer: [new OptimizeCssAssetsPlugin(), new TerserPlugin()],
 };
 
 config.module = {
@@ -92,13 +81,16 @@ config.module = {
 config.plugins = [
   new CleanWebpackPlugin(),
   new HtmlWebpackPlugin({
+    filename: 'index.html',
     template: './src/index.html',
+    inject: true,
+    chunks: ['index'],
   }),
   new HtmlWebpackPlugin({
     filename: '404.html',
     template: './src/404.html',
+    inject: true,
     chunks: ['404'],
-    injects: true,
   }),
   new MiniCssExtractPlugin({
     filename: '[name].[contentHash].css',

@@ -602,10 +602,10 @@ body {
 
   .modal_data--explicit {
     &::after {
-      width: 12rem;
-      height: 3rem;
+      width: 10rem;
+      height: 2.5rem;
       border-bottom-left-radius: 3rem;
-      font-size: 1.6rem;
+      font-size: 1.2rem;
     }
   }
 
@@ -814,9 +814,9 @@ body {
 
   .modal_data--explicit {
     &::after {
-      width: 16rem;
-      height: 4rem;
-      font-size: 1.8rem;
+      width: 12rem;
+      height: 3rem;
+      font-size: 1.4rem;
     }
   }
 }

@@ -41,13 +41,12 @@
   font-weight: 700;
   color: var(--item-subtitle-color);
   font-size: 1.6rem;
-  //white-space: nowrap;
-  //text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 0.2rem;
+  padding-bottom: 0.1rem;
 }
 
 .item_buttons {

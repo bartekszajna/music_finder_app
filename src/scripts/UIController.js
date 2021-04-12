@@ -139,7 +139,7 @@ export default class UIController {
             break;
           }
         }
-
+        //console.log(JSON.stringify(obj));
         listOfItems.push(obj);
       });
     }
@@ -149,6 +149,7 @@ export default class UIController {
       if (a.Type === 'Artist') return -1;
       if (b.Type === 'Artist') return 1;
     });
+
     this.listOfItems = listOfItems;
     return totalItemsAmount;
   }
