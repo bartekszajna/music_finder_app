@@ -161,7 +161,7 @@
   justify-content: space-between;
 }
 
-.buttons_group {
+.modal_buttons {
   display: flex;
   position: absolute;
   bottom: 0;
@@ -191,21 +191,31 @@
   }
 }
 
-.like_button {
-  background: none;
-  background-image: url(../assets/heart_icons.svg);
-  background-position-x: var(--like-button-position);
-  background-position-y: top;
-  background-repeat: no-repeat;
-  background-size: 200% 300%;
+.checkbox_container--modal {
   width: 2.7rem;
   height: 2.7rem;
+}
+
+.like_checkbox--modal {
+  appearance: none;
+  margin: 0;
+  width: 100%;
+  height: 100%;
   border: none;
   outline: none;
+  background-repeat: no-repeat;
+  background-position-x: var(--item-like-button-position);
+  background-position-y: top;
+  background-size: 200% 300%;
+  background-image: url(../assets/heart_icons.svg);
 
   &:hover,
   &:focus,
   &:active {
     background-position-y: center;
+  }
+
+  &:checked {
+    background-position-y: bottom;
   }
 }

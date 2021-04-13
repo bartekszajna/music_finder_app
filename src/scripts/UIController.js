@@ -9,7 +9,7 @@ export default class UIController {
     this.searchController;
     this.audioController;
     this.suggestionsListElement;
-    this.listOfItems;
+    //this.listOfItems;
     this.audioElement;
     this.modalAudioButtonElement;
     this.modalLinkElement;
@@ -25,7 +25,9 @@ export default class UIController {
     this.modalImageElement = document.querySelector('.modal_image');
     this.modalDataElement = document.querySelector('.modal_data');
     this.modalBackButtonElement = document.querySelector('.back_button');
-    this.modalLikeButtonElement = document.querySelector('.like_button');
+    this.modalLikeButtonElement = document.querySelector(
+      '.like_checkbox--modal'
+    );
 
     this.itemsContainer.addEventListener('click', this.renderModal.bind(this));
 
@@ -51,6 +53,7 @@ export default class UIController {
     this.modalContainer.classList.remove('modal_container--visible');
     this.modalDataElement.classList.remove('modal_data--explicit');
     this.modalDataElement.innerHTML = '';
+    this.modalLikeButtonElement.checked = false;
     this.audioController.remove();
 
     const scrollY = document.body.style.top;
@@ -150,13 +153,12 @@ export default class UIController {
       if (b.Type === 'Artist') return 1;
     });
 
-    this.listOfItems = listOfItems;
-    return totalItemsAmount;
+    return [listOfItems, totalItemsAmount];
   }
 
-  async loadAllImages() {
+  async loadAllImages(listOfItems) {
     let arrayOfPromises = [];
-    this.listOfItems.forEach((item) => {
+    listOfItems.forEach((item) => {
       arrayOfPromises.push(this.loadImage(item));
     });
 
@@ -184,7 +186,7 @@ export default class UIController {
     });
   }
 
-  async renderItemsList(totalItemsAmount, fetchedDataOffset) {
+  async renderItemsList(listOfItems, totalItemsAmount, fetchedDataOffset) {
     if (totalItemsAmount === 0) {
       this.itemsContainer.insertAdjacentHTML(
         'beforeEnd',
@@ -198,7 +200,7 @@ export default class UIController {
       return;
     }
 
-    if (!this.listOfItems.length) {
+    if (!listOfItems.length) {
       if (this.intersectionObserverObject instanceof IntersectionObserver) {
         this.intersectionObserverObject.disconnect();
       }
@@ -207,7 +209,7 @@ export default class UIController {
       return;
     }
 
-    let arrayOfPromises = await this.loadAllImages();
+    let arrayOfPromises = await this.loadAllImages(listOfItems);
 
     arrayOfPromises.forEach((promise) => {
       let item = document.createElement('div');
@@ -230,21 +232,37 @@ export default class UIController {
       let itemButtons = document.createElement('div');
       itemButtons.className = 'item_buttons';
 
-      let itemButtonInfo = document.createElement('button');
-      itemButtonInfo.className = 'item_button--info';
-      itemButtonInfo.innerText = 'More info';
-      itemButtonInfo.dataset.item = JSON.stringify(promise.value.item);
+      let itemInfoButton = document.createElement('button');
+      itemInfoButton.className = 'info_button';
+      itemInfoButton.innerText = 'More info';
+      itemInfoButton.dataset.item = JSON.stringify(promise.value.item);
 
-      let itemButtonLike = document.createElement('button');
-      itemButtonLike.className = 'item_button--like';
-      itemButtonLike.innerHTML =
-        '<span class="sr-only">Add to favourites</span>';
+      let checkBoxContainer = document.createElement('div');
+      checkBoxContainer.className = 'checkbox_container--item';
+
+      let checkboxLabel = document.createElement('label');
+      checkboxLabel.setAttribute('for', 'like_checkbox');
+      checkboxLabel.className = 'sr-only';
+      checkboxLabel.innerText = 'Like';
+
+      let checkboxInput = document.createElement('input');
+      checkboxInput.setAttribute('type', 'checkbox');
+      if (localStorage.getItem(promise.value.item.Id)) {
+        checkboxInput.setAttribute('checked', 'checked');
+      }
+      checkboxInput.setAttribute('id', 'like_checkbox');
+      checkboxInput.dataset.itemId = promise.value.item.Id;
+      checkboxInput.dataset.itemContent = JSON.stringify(promise.value.item);
+      checkboxInput.className = 'like_checkbox--item';
 
       itemData.append(itemTitle);
       itemData.append(itemSubtitle);
 
-      itemButtons.append(itemButtonInfo);
-      itemButtons.append(itemButtonLike);
+      checkBoxContainer.append(checkboxLabel);
+      checkBoxContainer.append(checkboxInput);
+
+      itemButtons.append(itemInfoButton);
+      itemButtons.append(checkBoxContainer);
 
       itemData.append(itemButtons);
 
@@ -279,30 +297,31 @@ export default class UIController {
   }
 
   renderModal(e) {
-    if (!e.target.dataset.item) {
+    const stringObject = e.target.dataset.item;
+
+    if (!stringObject) {
       return;
     }
 
     this.clickedInfoButton = e.target;
-    let object = JSON.parse(e.target.dataset.item);
-    let type = object.Type;
+    let objectToRender = JSON.parse(stringObject);
+    let type = objectToRender.Type;
 
-    delete object.Id;
-    delete object.Type;
-    delete object.Name;
+    delete objectToRender.Type;
+    delete objectToRender.Name;
     let fragment;
 
     switch (type) {
       case 'Album': {
-        fragment = this.renderAlbumModal(object);
+        fragment = this.renderAlbumModal(objectToRender);
         break;
       }
       case 'Artist': {
-        fragment = this.renderArtistModal(object);
+        fragment = this.renderArtistModal(objectToRender);
         break;
       }
       case 'Song': {
-        fragment = this.renderSongModal(object);
+        fragment = this.renderSongModal(objectToRender);
         break;
       }
     }
@@ -313,6 +332,13 @@ export default class UIController {
     document.querySelector('.modal_overflow').style.marginRight = `${
       window.innerWidth - document.documentElement.clientWidth
     }px`;
+
+    this.modalLikeButtonElement.dataset.itemId = objectToRender.Id;
+    this.modalLikeButtonElement.dataset.itemContent = stringObject;
+
+    if (localStorage.getItem(objectToRender.Id)) {
+      this.modalLikeButtonElement.checked = true;
+    }
 
     this.modalDataElement.insertAdjacentHTML('afterBegin', fragment);
 

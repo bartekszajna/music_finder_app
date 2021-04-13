@@ -78,9 +78,11 @@ export default class SearchController {
     // here can come data actually being an error JSON, like 404 or 429
     // so remember to implement fallback for this situation
 
-    const totalItemsAmount = this.prepareItems(data);
+    const [listOfItems, totalItemsAmount] = this.prepareItems(data);
 
-    this.renderItemsList(totalItemsAmount, this.fetchedDataOffset);
+    //const updatedListOfItems = this.compareWithStorageList(listOfItems);
+    console.log(listOfItems);
+    this.renderItemsList(listOfItems, totalItemsAmount, this.fetchedDataOffset);
 
     this.fetchedDataOffset += 3;
   }

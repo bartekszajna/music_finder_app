@@ -58,7 +58,7 @@
         </form>
         <div class="header_buttons">
           <button type="button" class="header_button button--user">
-            <span class="button_quantity">3</span>
+            <span class="button_quantity">0</span>
             <span class="sr-only button_text">Your favourites</span>
           </button>
           <button type="button" class="header_button button--mode">
@@ -110,13 +110,18 @@
 
           <div class="modal_data"></div>
 
-          <div class="buttons_group">
+          <div class="modal_buttons">
             <button type="button" class="back_button">
               <span class="sr-only">Close modal</span>
             </button>
-            <button type="button" class="like_button">
-              <span class="sr-only">Add to favourites</span>
-            </button>
+            <div class="checkbox_container--modal">
+              <label for="modal_checkbox" class="sr-only">Like</label>
+              <input
+                type="checkbox"
+                id="modal_checkbox"
+                class="like_checkbox like_checkbox--modal"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -388,12 +388,12 @@ body {
     font-size: 2rem;
   }
 
-  .item_button--info {
+  .info_button {
     font-size: 1.6rem;
     padding: 0.3rem 2rem;
   }
 
-  .item_button--like {
+  .checkbox_container--item {
     width: 2.6rem;
     height: 2.6rem;
   }
@@ -495,12 +495,12 @@ body {
     -webkit-line-clamp: 3;
   }
 
-  .item_button--info {
+  .info_button {
     font-size: 1.8rem;
     padding: 0.4rem 2.3rem;
   }
 
-  .item_button--like {
+  .checkbox_container--item {
     width: 3rem;
     height: 3rem;
   }
@@ -609,7 +609,7 @@ body {
     }
   }
 
-  .buttons_group {
+  .modal_buttons {
     padding: 0 1.8rem 1.5rem;
   }
 
@@ -618,7 +618,7 @@ body {
     height: 4rem;
   }
 
-  .like_button {
+  .checkbox_container--modal {
     width: 3.7rem;
     height: 3.7rem;
   }
@@ -791,13 +791,13 @@ body {
     font-size: 3rem;
   }
 
-  .item_button--info {
+  .info_button {
     font-size: 2.2rem;
     border-width: 0.2rem;
     padding: 0.6rem 2.8rem;
   }
 
-  .item_button--like {
+  .checkbox_container--item {
     width: 4rem;
     height: 4rem;
   }
@@ -866,7 +866,7 @@ body {
     }
   }
 
-  .buttons_group {
+  .modal_buttons {
     padding: 0 2.8rem 2rem;
   }
 
@@ -875,7 +875,7 @@ body {
     height: 5.5rem;
   }
 
-  .like_button {
+  .checkbox_container--modal {
     width: 5.2rem;
     height: 5.2rem;
   }

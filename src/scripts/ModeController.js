@@ -8,6 +8,9 @@ export default class ModeController {
       'click',
       this.modeButtonHandler.bind(this)
     );
+
+    this.systemModeHandler();
+    this.storageModeHandler();
   }
 
   modeButtonHandler() {
