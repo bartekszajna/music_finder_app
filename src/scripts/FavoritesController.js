@@ -3,21 +3,29 @@ export default class FavoritesController {
     this.favoritesButtonElement = document.querySelector('.button--user');
     this.modalLikeButton = document.querySelector('.modal_checkbox');
     this.popupElement = document.querySelector('.popup');
-
     this.favoritesNumberElement = this.favoritesButtonElement.querySelector(
       '.button_quantity'
     );
     this.itemsContainer = document.querySelector('.items_container');
     this.modalElement = document.querySelector('.modal');
+    this.hideItemsContainer;
+    this.clearItemsContainer;
+    this.showItemsContainer;
+    this.renderItemsList;
 
-    this.itemsContainer.addEventListener(
+    this.favoritesButtonElement.addEventListener(
       'click',
       this.favoritesButtonHandler.bind(this)
     );
 
+    this.itemsContainer.addEventListener(
+      'click',
+      this.itemsLikeHandler.bind(this)
+    );
+
     this.modalLikeButton.addEventListener(
       'click',
-      this.favoritesButtonHandler.bind(this)
+      this.itemsLikeHandler.bind(this)
     );
 
     this.modalLikeButton.addEventListener('keydown', this.detectEnterKey);
@@ -26,8 +34,25 @@ export default class FavoritesController {
     this.updateFavoritesQuantity();
   }
 
+  favoritesButtonHandler(e) {
+    this.hideItemsContainer();
+    this.clearItemsContainer();
+    window.scrollTo(0, 0);
+
+    let listOfItems = [];
+    Object.keys(localStorage).forEach(function (key) {
+      if (key === 'mode' || key === 'loglevel:webpack-dev-server') {
+        return;
+      }
+      listOfItems.push(JSON.parse(localStorage.getItem(key)));
+    });
+    console.log(listOfItems);
+
+    this.renderItemsList(listOfItems, listOfItems.length, 0, true);
+  }
+
   detectEnterKey(e) {
-    if (!e.target.id === 'modal_checkbox' && !e.target.id === 'item_checkbox') {
+    if (e.target.id !== 'modal_checkbox' && e.target.id !== 'item_checkbox') {
       return;
     }
     if (e.code === 'Enter') {
@@ -36,7 +61,7 @@ export default class FavoritesController {
     }
   }
 
-  favoritesButtonHandler(e) {
+  itemsLikeHandler(e) {
     const itemId = e.target.dataset.itemId;
     const itemData = e.target.dataset.itemContent;
 

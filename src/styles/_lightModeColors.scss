@@ -1,3 +1,5 @@
+$body-background-color-light: rgba(227, 227, 227, 0.3);
+
 $body-background-light: linear-gradient(
   to top,
   rgba(227, 227, 227, 0.3),
@@ -96,6 +98,8 @@ $audio-button-position-light: left;
 $audio-path-stroke-light: #00256c;
 
 .light_mode {
+  --body-background-color: #{$body-background-color-light};
+
   --body-background: #{$body-background-light};
 
   --header-background: #{$header-background-light};

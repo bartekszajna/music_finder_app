@@ -2,6 +2,7 @@ import App from './App';
 
 export default class SearchController {
   constructor() {
+    this.prepareItems;
     this.fetchedDataOffset = 0;
     this.previousInputValue = '';
     this.suggestionsListElement;
@@ -80,7 +81,14 @@ export default class SearchController {
 
     const [listOfItems, totalItemsAmount] = this.prepareItems(data);
 
-    this.renderItemsList(listOfItems, totalItemsAmount, this.fetchedDataOffset);
+    console.log(listOfItems);
+
+    this.renderItemsList(
+      listOfItems,
+      totalItemsAmount,
+      this.fetchedDataOffset,
+      false
+    );
 
     this.fetchedDataOffset += 3;
   }

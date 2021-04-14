@@ -19,7 +19,7 @@ html {
 
 body {
   min-width: 28rem;
-  background-color: white;
+  background-color: var(--body-background-color);
   background-image: url(../assets/mobile_background_image.svg),
     var(--body-background);
   background-repeat: no-repeat;
@@ -368,7 +368,6 @@ body {
   width: max-content;
   padding: 1rem 2.5rem;
   border-radius: 1rem;
-
   background-color: #001226;
   font-size: 1.6rem;
   opacity: 0;
@@ -415,36 +414,36 @@ body {
     display: none;
   }
 
-  .amount_header {
-    font-size: 2.6rem;
-  }
+  // .amount_header {
+  //   font-size: 2.6rem;
+  // }
 
-  .item {
-    height: 14rem;
-  }
+  // .item {
+  //   height: 14rem;
+  // }
 
-  .item_image {
-    width: 12rem;
-  }
+  // .item_image {
+  //   width: 12rem;
+  // }
 
-  .item_title {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-  }
+  // .item_title {
+  //   font-size: 1.8rem;
+  //   margin-bottom: 0.5rem;
+  // }
 
-  .item_subtitle {
-    font-size: 2rem;
-  }
+  // .item_subtitle {
+  //   font-size: 2rem;
+  // }
 
-  .info_button {
-    font-size: 1.6rem;
-    padding: 0.3rem 2rem;
-  }
+  // .info_button {
+  //   font-size: 1.6rem;
+  //   padding: 0.3rem 2rem;
+  // }
 
-  .checkbox_container--item {
-    width: 2.6rem;
-    height: 2.6rem;
-  }
+  // .checkbox_container--item {
+  //   width: 2.6rem;
+  //   height: 2.6rem;
+  // }
 }
 
 @media (min-width: 540px) {

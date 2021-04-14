@@ -1,3 +1,5 @@
+$body-background-color-dark: rgb(17, 20, 29);
+
 $body-background-dark: linear-gradient(
   to top,
   rgb(17, 20, 29),
@@ -108,6 +110,8 @@ $audio-button-position-dark: right;
 $audio-path-stroke-dark: #df4c77;
 
 .dark_mode {
+  --body-background-color: #{$body-background-color-dark};
+
   --body-background: #{$body-background-dark};
 
   --header-background: #{$header-background-dark};

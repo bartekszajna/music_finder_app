@@ -3,7 +3,7 @@ import SearchController from './SearchController';
 import UIController from './UIController';
 import AudioController from './AudioController';
 import ModeController from './ModeController';
-//import FavoritesController from './FavoritesController';
+import FavoritesController from './FavoritesController';
 
 export default class App {
   static throttledFunction(fn, delay) {
@@ -23,7 +23,7 @@ export default class App {
     const searchController = new SearchController();
     const audioController = new AudioController();
     const modeController = new ModeController();
-    //const favoritesController = new FavoritesController();
+    const favoritesController = new FavoritesController();
 
     searchController.prepareItems = uiController.prepareItems.bind(
       uiController
@@ -61,6 +61,19 @@ export default class App {
     );
     uiController.hideLoader = searchController.hideLoader.bind(
       searchController
+    );
+
+    favoritesController.hideItemsContainer = uiController.hideItemsContainer.bind(
+      uiController
+    );
+    favoritesController.clearItemsContainer = uiController.clearItemsContainer.bind(
+      uiController
+    );
+    favoritesController.showItemsContainer = uiController.showItemsContainer.bind(
+      uiController
+    );
+    favoritesController.renderItemsList = uiController.renderItemsList.bind(
+      uiController
     );
 
     this.displayWidthHandler();

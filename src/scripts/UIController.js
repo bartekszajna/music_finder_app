@@ -184,11 +184,20 @@ export default class UIController {
     });
   }
 
-  async renderItemsList(listOfItems, totalItemsAmount, fetchedDataOffset) {
+  async renderItemsList(
+    listOfItems,
+    totalItemsAmount,
+    fetchedDataOffset,
+    isItFromStorage
+  ) {
     if (totalItemsAmount === 0) {
+      const message = isItFromStorage
+        ? "You haven't liked any music yet"
+        : 'No results available';
+
       this.itemsContainer.insertAdjacentHTML(
         'beforeEnd',
-        `<p class="amount_header">No results available</p>`
+        `<p class="amount_header">${message}</p>`
       );
 
       this.hideLoader();
@@ -271,11 +280,16 @@ export default class UIController {
     });
 
     if (fetchedDataOffset === 0) {
+      const message = isItFromStorage
+        ? 'Your favorite list of music'
+        : `${totalItemsAmount} total results`;
+
       this.itemsContainer.insertAdjacentHTML(
         'afterBegin',
-        `<p class="amount_header">${totalItemsAmount} total results</p>`
+        `<p class="amount_header">${message}</p>`
       );
     }
+
     this.hideLoader();
 
     this.showItemsContainer();
@@ -287,9 +301,11 @@ export default class UIController {
     }
 
     // we hold reference to this object so we can disconnect it above in next calls
-    this.intersectionObserverObject = App.addBodyScrollListener(
-      this.searchController
-    );
+    if (!isItFromStorage) {
+      this.intersectionObserverObject = App.addBodyScrollListener(
+        this.searchController
+      );
+    }
 
     this.suggestionsListElement.innerHTML = '';
   }
@@ -370,11 +386,22 @@ export default class UIController {
 
     this.modalContainer.addEventListener('keydown', this.detectEscapeKeydown);
 
+    this.modalContainer.addEventListener(
+      'transitionend',
+      this.focusOnFirstElement.bind(this),
+      { once: true }
+    );
+
     this.modalContainer.classList.add('modal_container--visible');
 
     let scrolledBy = window.scrollY;
     document.body.style.top = `-${scrolledBy}px`;
     document.body.style.position = 'fixed';
+  }
+
+  focusOnFirstElement(e) {
+    console.log('focus');
+    this.firstFocusableModalElement.focus();
   }
 
   firstModalElHandler(e) {
