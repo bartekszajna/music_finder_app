@@ -80,8 +80,6 @@ export default class SearchController {
 
     const [listOfItems, totalItemsAmount] = this.prepareItems(data);
 
-    //const updatedListOfItems = this.compareWithStorageList(listOfItems);
-    console.log(listOfItems);
     this.renderItemsList(listOfItems, totalItemsAmount, this.fetchedDataOffset);
 
     this.fetchedDataOffset += 3;

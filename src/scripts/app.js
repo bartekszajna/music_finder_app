@@ -3,7 +3,7 @@ import SearchController from './SearchController';
 import UIController from './UIController';
 import AudioController from './AudioController';
 import ModeController from './ModeController';
-import FavoritesController from './FavoritesController';
+//import FavoritesController from './FavoritesController';
 
 export default class App {
   static throttledFunction(fn, delay) {
@@ -23,7 +23,7 @@ export default class App {
     const searchController = new SearchController();
     const audioController = new AudioController();
     const modeController = new ModeController();
-    const favoritesController = new FavoritesController();
+    //const favoritesController = new FavoritesController();
 
     searchController.prepareItems = uiController.prepareItems.bind(
       uiController
@@ -32,9 +32,6 @@ export default class App {
       uiController
     );
     searchController.uiController = uiController;
-
-    searchController.compareWithStorageList =
-      favoritesController.compareWithStorageList;
 
     suggestionsList.formSearchElement = searchController.formSearchElement;
     suggestionsList.inputSearchElement = searchController.inputSearchElement;

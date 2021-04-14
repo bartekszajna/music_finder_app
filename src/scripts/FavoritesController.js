@@ -1,7 +1,8 @@
 export default class FavoritesController {
   constructor() {
     this.favoritesButtonElement = document.querySelector('.button--user');
-    this.modalLikeButton = document.querySelector('.like_checkbox--modal');
+    this.modalLikeButton = document.querySelector('.modal_checkbox');
+    this.popupElement = document.querySelector('.popup');
 
     this.favoritesNumberElement = this.favoritesButtonElement.querySelector(
       '.button_quantity'
@@ -19,18 +20,21 @@ export default class FavoritesController {
       this.favoritesButtonHandler.bind(this)
     );
 
+    this.modalLikeButton.addEventListener('keydown', this.detectEnterKey);
+    this.itemsContainer.addEventListener('keydown', this.detectEnterKey);
+
     this.updateFavoritesQuantity();
   }
 
-  // compareWithStorageList(listOfItems) {
-  //   listOfItems.forEach((item) => {
-  //     localStorage.getItem(item.Id)
-  //       ? (item.Liked = true)
-  //       : (item.Liked = false);
-  //   });
-
-  //   return listOfItems;
-  // }
+  detectEnterKey(e) {
+    if (!e.target.id === 'modal_checkbox' && !e.target.id === 'item_checkbox') {
+      return;
+    }
+    if (e.code === 'Enter') {
+      console.log('XD');
+      e.target.click();
+    }
+  }
 
   favoritesButtonHandler(e) {
     const itemId = e.target.dataset.itemId;
@@ -44,15 +48,10 @@ export default class FavoritesController {
       let itemCounterpart = this.itemsContainer.querySelector(
         `[data-item-id="${itemId}"]`
       );
-
       itemCounterpart.checked = !itemCounterpart.checked;
-
-      console.log(itemCounterpart);
-    } else {
-      console.log('modal');
     }
+
     this.updateStorageList(itemId, itemData);
-    //this.updateItemData();
     this.updateFavoritesQuantity();
   }
 
@@ -60,12 +59,26 @@ export default class FavoritesController {
     const alreadyLiked = localStorage.getItem(itemId);
 
     if (alreadyLiked) {
-      console.log('Deleted from the list');
       localStorage.removeItem(itemId);
+      this.showPopup(true);
     } else {
-      console.log('Added to the list');
       localStorage.setItem(itemId, itemData);
+      this.showPopup(false);
     }
+  }
+
+  showPopup(wasItDeleted) {
+    this.popupElement.classList.remove('popup--visible');
+    //animation reflow
+    this.popupElement.offsetWidth;
+
+    if (wasItDeleted) {
+      this.popupElement.innerText = 'Removed from favorites';
+    } else {
+      this.popupElement.innerText = 'Added to favorites';
+    }
+
+    this.popupElement.classList.add('popup--visible');
   }
 
   updateFavoritesQuantity() {

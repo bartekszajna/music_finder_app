@@ -8,16 +8,20 @@
   display: flex;
   transform: scale(0);
   opacity: 0;
+  visibility: hidden;
   z-index: 10;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.3s ease-out, transform 0s 0.3s ease-out;
+  transition: opacity 0.3s ease-out, transform 0s 0.3s ease-out,
+    visibility 0.3s ease-out;
 
   &--visible {
     display: flex;
     transform: scale(1);
     opacity: 1;
-    transition: opacity 0.3s ease-out, transform 0s 0s ease-out;
+    visibility: visible;
+    transition: opacity 0.3s ease-out, transform 0s 0s ease-out,
+      visibility 0s ease-out;
   }
 }
 
@@ -196,7 +200,7 @@
   height: 2.7rem;
 }
 
-.like_checkbox--modal {
+.modal_checkbox {
   appearance: none;
   margin: 0;
   width: 100%;
@@ -217,5 +221,9 @@
 
   &:checked {
     background-position-y: bottom;
+  }
+
+  &:checked:focus {
+    transform: scale(1.1);
   }
 }

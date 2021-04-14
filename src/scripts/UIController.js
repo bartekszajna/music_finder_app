@@ -25,9 +25,7 @@ export default class UIController {
     this.modalImageElement = document.querySelector('.modal_image');
     this.modalDataElement = document.querySelector('.modal_data');
     this.modalBackButtonElement = document.querySelector('.back_button');
-    this.modalLikeButtonElement = document.querySelector(
-      '.like_checkbox--modal'
-    );
+    this.modalLikeButtonElement = document.querySelector('.modal_checkbox');
 
     this.itemsContainer.addEventListener('click', this.renderModal.bind(this));
 
@@ -241,7 +239,7 @@ export default class UIController {
       checkBoxContainer.className = 'checkbox_container--item';
 
       let checkboxLabel = document.createElement('label');
-      checkboxLabel.setAttribute('for', 'like_checkbox');
+      checkboxLabel.setAttribute('for', 'item_checkbox');
       checkboxLabel.className = 'sr-only';
       checkboxLabel.innerText = 'Like';
 
@@ -250,10 +248,10 @@ export default class UIController {
       if (localStorage.getItem(promise.value.item.Id)) {
         checkboxInput.setAttribute('checked', 'checked');
       }
-      checkboxInput.setAttribute('id', 'like_checkbox');
+      checkboxInput.setAttribute('id', 'item_checkbox');
       checkboxInput.dataset.itemId = promise.value.item.Id;
       checkboxInput.dataset.itemContent = JSON.stringify(promise.value.item);
-      checkboxInput.className = 'like_checkbox--item';
+      checkboxInput.className = 'item_checkbox';
 
       itemData.append(itemTitle);
       itemData.append(itemSubtitle);

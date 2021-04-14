@@ -26,7 +26,7 @@
   display: flex;
   margin-left: 1.5rem;
   width: 100%;
-  overflow: hidden;
+  //overflow: hidden;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -80,7 +80,7 @@
   height: 2rem;
 }
 
-.like_checkbox--item {
+.item_checkbox {
   appearance: none;
   margin: 0;
   width: 100%;
@@ -101,5 +101,9 @@
 
   &:checked {
     background-position-y: bottom;
+  }
+
+  &:checked:focus {
+    transform: scale(1.1);
   }
 }

@@ -54,6 +54,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 10;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
   background: var(--header-background);
   display: flex;
@@ -324,6 +325,7 @@ body {
 .loader {
   position: fixed;
   opacity: 0;
+  visibility: hidden;
   top: 50%;
   left: 50%;
   z-index: 100;
@@ -332,9 +334,13 @@ body {
   fill: white;
   stroke: white;
   transform: translate(-50%, -50%) scale(0);
+  transition: opacity 1s 0s ease-out, transform 0s 1s ease-out,
+    visibility 0s 1s ease-out;
 
   &--visible {
-    transition: opacity 1s 0s ease-out, transform 0s 1s ease-out;
+    visibility: visible;
+    transition: opacity 1s 0s ease-out, transform 0s 1s ease-out,
+      visibility 0s ease-out;
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
     animation: spinning 2s forwards infinite cubic-bezier(0, 0.7, 1, 0.39);
@@ -351,6 +357,48 @@ body {
   }
   to {
     transform: scale(1) translate(-50%, -50%) rotate(720deg);
+  }
+}
+
+.popup {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+  padding: 1rem 2.5rem;
+  border-radius: 1rem;
+
+  background-color: #001226;
+  font-size: 1.6rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%);
+  //transition: opacity 0.4s 0s ease-out, visibility 0s 1s ease-out;
+
+  &--visible {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.4s 0s ease-out, visibility 0s 0s ease-out;
+    animation: popup 2.5s ease-in-out forwards;
+  }
+}
+
+@keyframes popup {
+  0% {
+    opacity: 0;
+    visibility: visible;
+  }
+  16% {
+    opacity: 1;
+  }
+  84% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
   }
 }
 
