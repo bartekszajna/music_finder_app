@@ -62,6 +62,9 @@ export default class App {
     uiController.hideLoader = searchController.hideLoader.bind(
       searchController
     );
+    uiController.removeItemAnimation = favoritesController.removeItemAnimation.bind(
+      favoritesController
+    );
 
     favoritesController.hideItemsContainer = uiController.hideItemsContainer.bind(
       uiController
@@ -78,7 +81,14 @@ export default class App {
     favoritesController.inputSearchElement =
       searchController.inputSearchElement;
 
-    this.displayWidthHandler();
+    favoritesController.showLoader = searchController.showLoader.bind(
+      searchController
+    );
+    favoritesController.hideLoader = searchController.hideLoader.bind(
+      searchController
+    );
+
+    this.viewportWidthHandler();
     this.addBodyClickListener(searchController);
     this.preventWindowArrowScroll();
   }
@@ -130,7 +140,7 @@ export default class App {
     return observer;
   }
 
-  static displayWidthHandler() {
+  static viewportWidthHandler() {
     const mediaQueryObject = window.matchMedia('(min-width: 1200px)');
 
     const searchInput = document.querySelector('.search_input');

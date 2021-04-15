@@ -47,7 +47,7 @@ export default class UIController {
     this.itemsContainer.innerHTML = '';
   }
 
-  closeModal() {
+  closeModal(e) {
     this.modalContainer.classList.remove('modal_container--visible');
     this.modalDataElement.classList.remove('modal_data--explicit');
     this.modalDataElement.innerHTML = '';
@@ -81,6 +81,11 @@ export default class UIController {
       'keydown',
       this.lastModalElHandler
     );
+
+    if (e.target.dataset.remove === 'true') {
+      this.removeItemAnimation(e.target.dataset.itemId);
+      e.target.dataset.remove = 'false';
+    }
 
     this.clickedInfoButton.focus();
     this.clickedInfoButton.setAttribute('aria-expanded', 'false');
@@ -219,11 +224,10 @@ export default class UIController {
 
     let arrayOfPromises = await this.loadAllImages(listOfItems);
 
-    let itemsAmount = this.itemsContainer.children.length;
-
     arrayOfPromises.forEach((promise) => {
       let item = document.createElement('div');
       item.className = 'item';
+      item.dataset.itemId = promise.value.item.Id;
 
       let itemImage = promise.value.imageElement;
       itemImage.classList = 'item_image';
@@ -248,12 +252,13 @@ export default class UIController {
       itemInfoButton.setAttribute('aria-label', 'open modal');
       itemInfoButton.setAttribute('aria-expanded', 'false');
       itemInfoButton.dataset.item = JSON.stringify(promise.value.item);
+      itemInfoButton.dataset.storage = isItFromStorage;
 
       let checkBoxContainer = document.createElement('div');
       checkBoxContainer.className = 'checkbox_container--item';
 
       let checkboxLabel = document.createElement('label');
-      checkboxLabel.setAttribute('for', `item_checkbox${itemsAmount}`);
+      checkboxLabel.setAttribute('for', `${promise.value.item.Id}`);
       checkboxLabel.className = 'sr-only';
       checkboxLabel.innerText = 'Add this item to favorites list';
 
@@ -262,9 +267,10 @@ export default class UIController {
       if (localStorage.getItem(promise.value.item.Id)) {
         checkboxInput.setAttribute('checked', 'checked');
       }
-      checkboxInput.setAttribute('id', `item_checkbox${itemsAmount}`);
-      checkboxInput.dataset.itemId = promise.value.item.Id;
-      checkboxInput.dataset.itemContent = JSON.stringify(promise.value.item);
+      checkboxInput.setAttribute('id', `${promise.value.item.Id}`);
+      //checkboxInput.dataset.itemId = promise.value.item.Id;
+      checkboxInput.dataset.storage = isItFromStorage;
+      checkboxInput.dataset.item = JSON.stringify(promise.value.item);
       checkboxInput.className = 'item_checkbox';
 
       itemData.append(itemTitle);
@@ -280,7 +286,7 @@ export default class UIController {
 
       item.append(itemImage);
       item.append(itemData);
-      itemsAmount++;
+
       this.itemsContainer.append(item);
     });
 
@@ -316,11 +322,14 @@ export default class UIController {
   }
 
   renderModal(e) {
-    const stringObject = e.target.dataset.item;
-
-    if (!stringObject) {
+    if (!e.target.getAttribute('aria-label')) {
       return;
     }
+    console.log('modal opens');
+
+    const stringObject = e.target.dataset.item;
+    const isItFromStorage = e.target.dataset.storage;
+
     e.target.setAttribute('aria-expanded', 'true');
     this.clickedInfoButton = e.target;
     let objectToRender = JSON.parse(stringObject);
@@ -352,8 +361,10 @@ export default class UIController {
       window.innerWidth - document.documentElement.clientWidth
     }px`;
 
-    this.modalLikeButtonElement.dataset.itemId = objectToRender.Id;
-    this.modalLikeButtonElement.dataset.itemContent = stringObject;
+    this.modalLikeButtonElement.setAttribute('id', objectToRender.Id);
+    this.modalLikeButtonElement.dataset.item = stringObject;
+    this.modalLikeButtonElement.dataset.storage = isItFromStorage;
+    this.modalBackButtonElement.dataset.itemId = objectToRender.Id;
 
     if (localStorage.getItem(objectToRender.Id)) {
       this.modalLikeButtonElement.checked = true;
@@ -404,8 +415,7 @@ export default class UIController {
     document.body.style.position = 'fixed';
   }
 
-  focusOnFirstElement(e) {
-    console.log('focus');
+  focusOnFirstElement() {
     this.firstFocusableModalElement.focus();
   }
 

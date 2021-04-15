@@ -2,6 +2,7 @@ export default class FavoritesController {
   constructor() {
     this.favoritesButtonElement = document.querySelector('.button--user');
     this.modalLikeButton = document.querySelector('.modal_checkbox');
+    this.modalBackButton = document.querySelector('.back_button');
     this.popupElement = document.querySelector('.popup');
     this.favoritesNumberElement = this.favoritesButtonElement.querySelector(
       '.button_quantity'
@@ -13,6 +14,8 @@ export default class FavoritesController {
     this.clearItemsContainer;
     this.showItemsContainer;
     this.renderItemsList;
+    this.showLoader;
+    this.hideLoader;
 
     this.favoritesButtonElement.addEventListener(
       'click',
@@ -36,9 +39,14 @@ export default class FavoritesController {
   }
 
   favoritesButtonHandler(e) {
-    if (e.target.ariaExpanded === 'true') {
+    if (
+      e.target.getAttribute('aria-expanded') === 'true' ||
+      e.target.parentElement.getAttribute('aria-expanded') === 'true'
+    ) {
       return;
     }
+
+    this.showLoader();
     this.hideItemsContainer();
     this.clearItemsContainer();
     window.scrollTo(0, 0);
@@ -58,32 +66,108 @@ export default class FavoritesController {
   }
 
   detectEnterKey(e) {
-    if (e.target.id !== 'modal_checkbox' && e.target.id !== 'item_checkbox') {
+    if (
+      e.target.className !== 'modal_checkbox' &&
+      e.target.className !== 'item_checkbox'
+    ) {
       return;
     }
     if (e.code === 'Enter') {
-      console.log('XD');
       e.target.click();
     }
   }
 
   itemsLikeHandler(e) {
-    const itemId = e.target.dataset.itemId;
-    const itemData = e.target.dataset.itemContent;
+    const itemId = e.target.id;
 
     if (!itemId) {
       return;
     }
 
+    const itemData = e.target.dataset.item;
+    const isItFromStorage = e.target.dataset.storage === 'true';
+
+    let storageLimit = localStorage.getItem('mode') ? 20 : 19;
+    if (e.target.checked && localStorage.length > storageLimit) {
+      this.showPopup(
+        'Max number of stored items exceeded. Please remove some of them to add new ones'
+      );
+      e.target.checked = false;
+      return;
+    }
+
     if (e.target === this.modalLikeButton) {
       let itemCounterpart = this.itemsContainer.querySelector(
-        `[data-item-id="${itemId}"]`
+        `[id="${itemId}"]`
       );
       itemCounterpart.checked = !itemCounterpart.checked;
+      if (e.target.dataset.storage === 'true') {
+        console.log('correct2');
+        this.modalBackButton.dataset.remove = !itemCounterpart.checked;
+      }
+    }
+
+    if (
+      !e.target.checked &&
+      isItFromStorage &&
+      e.target !== this.modalLikeButton
+    ) {
+      e.target.disabled = true;
+      this.removeItemAnimation(itemId);
     }
 
     this.updateStorageList(itemId, itemData);
     this.updateFavoritesQuantity();
+  }
+
+  removeItemAnimation(idToRemove) {
+    let elementToRemove = [...this.itemsContainer.children].find(
+      (child) => child.dataset.itemId === idToRemove
+    );
+
+    const boundingBox = new Map(
+      Array.from(this.itemsContainer.children).map((child) => [
+        child,
+        child.getBoundingClientRect(),
+      ])
+    );
+
+    let animationObject = elementToRemove.animate(
+      [{ opacity: 1 }, { opacity: 0 }],
+      { easing: 'cubic-bezier(.1,.35,.38,1)', duration: 400 }
+    );
+
+    animationObject.finished.then(() => {
+      elementToRemove.remove();
+
+      const newBoundingBox = new Map(
+        Array.from(this.itemsContainer.children).map((child) => [
+          child,
+          child.getBoundingClientRect(),
+        ])
+      );
+
+      newBoundingBox.forEach((rect, child) => {
+        let newPosX = rect.x;
+        let oldPosX = boundingBox.get(child).x;
+        let newPosY = rect.y;
+        let oldPosY = boundingBox.get(child).y;
+        let translateTransform = `translate(${oldPosX - newPosX}px, ${
+          oldPosY - newPosY
+        }px)`;
+
+        child.animate(
+          [
+            { transform: `${translateTransform}` },
+            { transform: 'translate(0,0)' },
+          ],
+          {
+            easing: 'cubic-bezier(.1,.35,.38,1)',
+            duration: 500,
+          }
+        );
+      });
+    });
   }
 
   updateStorageList(itemId, itemData) {
@@ -91,23 +175,19 @@ export default class FavoritesController {
 
     if (alreadyLiked) {
       localStorage.removeItem(itemId);
-      this.showPopup(true);
+      this.showPopup('Removed from favorites');
     } else {
       localStorage.setItem(itemId, itemData);
-      this.showPopup(false);
+      this.showPopup('Added to favorites');
     }
   }
 
-  showPopup(wasItDeleted) {
+  showPopup(message) {
     this.popupElement.classList.remove('popup--visible');
     //animation reflow
     this.popupElement.offsetWidth;
 
-    if (wasItDeleted) {
-      this.popupElement.innerText = 'Removed from favorites';
-    } else {
-      this.popupElement.innerText = 'Added to favorites';
-    }
+    this.popupElement.innerText = `${message}`;
 
     this.popupElement.classList.add('popup--visible');
   }

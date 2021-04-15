@@ -274,7 +274,7 @@ body {
   &:active,
   &[aria-expanded='true'] {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
 }
 
@@ -363,25 +363,27 @@ body {
 
 .popup {
   position: fixed;
-  bottom: 10%;
+  bottom: 5rem;
+  text-align: center;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   width: max-content;
-  padding: 1rem 2.5rem;
+  max-width: 50rem;
+  padding: 1.2rem 2rem;
   border-radius: 1rem;
-  background-color: #001226;
+  background-color: #001a35;
   font-size: 1.6rem;
   opacity: 0;
+  z-index: 20;
   visibility: hidden;
-  transform: translate(-50%, -50%);
   //transition: opacity 0.4s 0s ease-out, visibility 0s 1s ease-out;
 
   &--visible {
     visibility: visible;
     opacity: 1;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     transition: opacity 0.4s 0s ease-out, visibility 0s 0s ease-out;
-    animation: popup 2.5s ease-in-out forwards;
+    animation: popup 3s ease-in-out forwards;
   }
 }
 
@@ -445,6 +447,9 @@ body {
   //   width: 2.6rem;
   //   height: 2.6rem;
   // }
+  .popup {
+    bottom: 2rem;
+  }
 }
 
 @media (min-width: 540px) {
@@ -685,6 +690,11 @@ body {
     font-size: 1.4rem;
     margin-right: 2rem;
   }
+
+  .popup {
+    bottom: 6.5rem;
+    font-size: 2rem;
+  }
 }
 
 @media (max-height: 414px) and (min-width: 460px) and (max-width: 823px) {
@@ -743,6 +753,10 @@ body {
 
   .footer {
     display: none;
+  }
+
+  .popup {
+    bottom: 2rem;
   }
 }
 
@@ -926,5 +940,9 @@ body {
   .checkbox_container--modal {
     width: 5.2rem;
     height: 5.2rem;
+  }
+
+  .popup {
+    font-size: 2.4rem;
   }
 }
