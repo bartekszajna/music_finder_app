@@ -8,6 +8,7 @@ export default class SearchController {
     this.suggestionsListElement;
     this.hideItemsContainer;
     this.clearItemsContainer;
+    this.showPopup;
     this.favoritesButtonElement = document.querySelector('.button--user');
     this.formSearchElement = document.querySelector('.header_search');
     this.inputSearchElement = document.querySelector('.search_input');
@@ -36,6 +37,10 @@ export default class SearchController {
 
   hideLoader() {
     this.loaderElement.classList.remove('loader--visible');
+  }
+
+  setPreviousInputValue(value) {
+    this.previousInputValue = value;
   }
 
   async submissionHandler(e) {
@@ -77,22 +82,31 @@ export default class SearchController {
     // here comes the whole logic behind fetching all the tiles
     this.showLoader();
 
-    const data = await this.fetchData(inputValue, this.fetchedDataOffset);
-    // here can come data actually being an error JSON, like 404 or 429
-    // so remember to implement fallback for this situation
+    try {
+      const data = await this.fetchData(inputValue, this.fetchedDataOffset);
+      // no internet error comes from above line as a TypeError - failed to fetch
 
-    const [listOfItems, totalItemsAmount] = this.prepareItems(data);
+      if (data.error) {
+        throw new Error(data.error.message);
+        //custom API error {status:400, message:"Only valid bearer authentication supported"}
+      }
 
-    console.log(listOfItems);
+      const [listOfItems, totalItemsAmount] = this.prepareItems(data);
 
-    this.renderItemsList(
-      listOfItems,
-      totalItemsAmount,
-      this.fetchedDataOffset,
-      false
-    );
+      this.renderItemsList(
+        listOfItems,
+        totalItemsAmount,
+        this.fetchedDataOffset,
+        false
+      );
 
-    this.fetchedDataOffset += 3;
+      this.fetchedDataOffset += 3;
+    } catch (errorObject) {
+      this.hideLoader();
+      this.showPopup(
+        errorObject.message + '. Please, try refreshing the page.'
+      );
+    }
   }
 
   arrowKeysHandler(e) {
@@ -113,12 +127,21 @@ export default class SearchController {
       this.suggestionsListElement.innerText = '';
       return;
     }
+    try {
+      const data = await this.fetchData(inputValue, 0);
+      // no internet error comes from above line as a TypeError - failed to fetch
+      if (data.error) {
+        throw new Error(data.error.message);
+        //custom API error {status:400, message:"Only valid bearer authentication supported"}
+      }
+      const list = this.prepareSuggestionsData(data);
 
-    const data = await this.fetchData(inputValue, 0);
-
-    const list = this.prepareSuggestionsData(data);
-
-    this.renderSuggestionsList(list);
+      this.renderSuggestionsList(list);
+    } catch (errorObject) {
+      this.showPopup(
+        errorObject.message + '. Please, try refreshing the page.'
+      );
+    }
   }
 
   async fetchData(value, offset) {

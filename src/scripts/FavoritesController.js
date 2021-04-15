@@ -50,6 +50,7 @@ export default class FavoritesController {
     this.hideItemsContainer();
     this.clearItemsContainer();
     window.scrollTo(0, 0);
+    this.setPreviousInputValue('');
     this.inputSearchElement.value = '';
     this.favoritesButtonElement.setAttribute('aria-expanded', 'true');
 
@@ -60,7 +61,6 @@ export default class FavoritesController {
       }
       listOfItems.push(JSON.parse(localStorage.getItem(key)));
     });
-    console.log(listOfItems);
 
     this.renderItemsList(listOfItems, listOfItems.length, 0, true);
   }
@@ -102,7 +102,6 @@ export default class FavoritesController {
       );
       itemCounterpart.checked = !itemCounterpart.checked;
       if (e.target.dataset.storage === 'true') {
-        console.log('correct2');
         this.modalBackButton.dataset.remove = !itemCounterpart.checked;
       }
     }

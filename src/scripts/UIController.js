@@ -325,7 +325,6 @@ export default class UIController {
     if (!e.target.getAttribute('aria-label')) {
       return;
     }
-    console.log('modal opens');
 
     const stringObject = e.target.dataset.item;
     const isItFromStorage = e.target.dataset.storage;

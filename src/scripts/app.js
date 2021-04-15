@@ -51,6 +51,10 @@ export default class App {
       uiController
     );
 
+    searchController.showPopup = favoritesController.showPopup.bind(
+      favoritesController
+    );
+
     uiController.searchController = searchController;
     uiController.suggestionsListElement =
       suggestionsList.suggestionsListElement;
@@ -88,6 +92,10 @@ export default class App {
       searchController
     );
 
+    favoritesController.setPreviousInputValue = searchController.setPreviousInputValue.bind(
+      searchController
+    );
+
     this.viewportWidthHandler();
     this.addBodyClickListener(searchController);
     this.preventWindowArrowScroll();
@@ -95,11 +103,16 @@ export default class App {
 
   static addBodyClickListener(searchController) {
     function blurHandler(e) {
-      if (
-        e.target !== document.querySelector('.items_container') &&
-        !e.target.contains(document.querySelector('.header')) &&
-        e.target !== document.querySelector('.header_logo')
-      ) {
+      const elementsAllowedToClick = [
+        document.documentElement,
+        document.body,
+        document.querySelector('.header'),
+        document.querySelector('.header_logo'),
+        document.querySelector('.header_buttons'),
+        document.querySelector('.items_container'),
+        document.querySelector('.amount_header'),
+      ];
+      if (!elementsAllowedToClick.find((el) => el === e.target)) {
         return;
       } else {
         searchController.formSearchElement.dispatchEvent(
@@ -107,7 +120,7 @@ export default class App {
         );
       }
     }
-    document.body.addEventListener('click', blurHandler);
+    document.documentElement.addEventListener('click', blurHandler);
   }
 
   static preventWindowArrowScroll() {
