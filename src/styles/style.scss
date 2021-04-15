@@ -271,7 +271,8 @@ body {
 
   &:hover,
   &:focus,
-  &:active {
+  &:active,
+  &[aria-expanded='true'] {
     opacity: 1;
     transform: scale(1.05);
   }

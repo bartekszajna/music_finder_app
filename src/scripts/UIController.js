@@ -83,6 +83,7 @@ export default class UIController {
     );
 
     this.clickedInfoButton.focus();
+    this.clickedInfoButton.setAttribute('aria-expanded', 'false');
   }
 
   prepareItems(data) {
@@ -218,6 +219,8 @@ export default class UIController {
 
     let arrayOfPromises = await this.loadAllImages(listOfItems);
 
+    let itemsAmount = this.itemsContainer.children.length;
+
     arrayOfPromises.forEach((promise) => {
       let item = document.createElement('div');
       item.className = 'item';
@@ -242,22 +245,24 @@ export default class UIController {
       let itemInfoButton = document.createElement('button');
       itemInfoButton.className = 'info_button';
       itemInfoButton.innerText = 'More info';
+      itemInfoButton.setAttribute('aria-label', 'open modal');
+      itemInfoButton.setAttribute('aria-expanded', 'false');
       itemInfoButton.dataset.item = JSON.stringify(promise.value.item);
 
       let checkBoxContainer = document.createElement('div');
       checkBoxContainer.className = 'checkbox_container--item';
 
       let checkboxLabel = document.createElement('label');
-      checkboxLabel.setAttribute('for', 'item_checkbox');
+      checkboxLabel.setAttribute('for', `item_checkbox${itemsAmount}`);
       checkboxLabel.className = 'sr-only';
-      checkboxLabel.innerText = 'Like';
+      checkboxLabel.innerText = 'Add this item to favorites list';
 
       let checkboxInput = document.createElement('input');
       checkboxInput.setAttribute('type', 'checkbox');
       if (localStorage.getItem(promise.value.item.Id)) {
         checkboxInput.setAttribute('checked', 'checked');
       }
-      checkboxInput.setAttribute('id', 'item_checkbox');
+      checkboxInput.setAttribute('id', `item_checkbox${itemsAmount}`);
       checkboxInput.dataset.itemId = promise.value.item.Id;
       checkboxInput.dataset.itemContent = JSON.stringify(promise.value.item);
       checkboxInput.className = 'item_checkbox';
@@ -275,7 +280,7 @@ export default class UIController {
 
       item.append(itemImage);
       item.append(itemData);
-
+      itemsAmount++;
       this.itemsContainer.append(item);
     });
 
@@ -316,7 +321,7 @@ export default class UIController {
     if (!stringObject) {
       return;
     }
-
+    e.target.setAttribute('aria-expanded', 'true');
     this.clickedInfoButton = e.target;
     let objectToRender = JSON.parse(stringObject);
     let type = objectToRender.Type;

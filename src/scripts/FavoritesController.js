@@ -8,6 +8,7 @@ export default class FavoritesController {
     );
     this.itemsContainer = document.querySelector('.items_container');
     this.modalElement = document.querySelector('.modal');
+    this.inputSearchElement;
     this.hideItemsContainer;
     this.clearItemsContainer;
     this.showItemsContainer;
@@ -35,9 +36,14 @@ export default class FavoritesController {
   }
 
   favoritesButtonHandler(e) {
+    if (e.target.ariaExpanded === 'true') {
+      return;
+    }
     this.hideItemsContainer();
     this.clearItemsContainer();
     window.scrollTo(0, 0);
+    this.inputSearchElement.value = '';
+    this.favoritesButtonElement.setAttribute('aria-expanded', 'true');
 
     let listOfItems = [];
     Object.keys(localStorage).forEach(function (key) {

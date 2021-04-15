@@ -75,6 +75,8 @@ export default class App {
     favoritesController.renderItemsList = uiController.renderItemsList.bind(
       uiController
     );
+    favoritesController.inputSearchElement =
+      searchController.inputSearchElement;
 
     this.displayWidthHandler();
     this.addBodyClickListener(searchController);

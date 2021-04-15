@@ -8,6 +8,7 @@ export default class SearchController {
     this.suggestionsListElement;
     this.hideItemsContainer;
     this.clearItemsContainer;
+    this.favoritesButtonElement = document.querySelector('.button--user');
     this.formSearchElement = document.querySelector('.header_search');
     this.inputSearchElement = document.querySelector('.search_input');
     this.fetchAddress = 'https://warm-temple-70787.herokuapp.com/search?q=';
@@ -66,6 +67,7 @@ export default class SearchController {
       this.hideItemsContainer();
       this.clearItemsContainer();
       window.scrollTo(0, 0);
+      this.favoritesButtonElement.setAttribute('aria-expanded', 'false');
     }
 
     this.previousInputValue = inputValue;
