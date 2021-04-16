@@ -203,7 +203,7 @@ export default class UIController {
 
       this.itemsContainer.insertAdjacentHTML(
         'beforeEnd',
-        `<p class="amount_header">${message}</p>`
+        `<p class="amount_header" aria-live="polite">${message}</p>`
       );
 
       this.hideLoader();
@@ -249,7 +249,10 @@ export default class UIController {
       let itemInfoButton = document.createElement('button');
       itemInfoButton.className = 'info_button';
       itemInfoButton.innerText = 'More info';
-      itemInfoButton.setAttribute('aria-label', 'open modal');
+      itemInfoButton.setAttribute(
+        'aria-label',
+        'Read more information about this item'
+      );
       itemInfoButton.setAttribute('aria-expanded', 'false');
       itemInfoButton.dataset.item = JSON.stringify(promise.value.item);
       itemInfoButton.dataset.storage = isItFromStorage;
@@ -297,7 +300,7 @@ export default class UIController {
 
       this.itemsContainer.insertAdjacentHTML(
         'afterBegin',
-        `<p class="amount_header">${message}</p>`
+        `<p class="amount_header" aria-live="polite">${message}</p>`
       );
     }
 
@@ -482,9 +485,12 @@ export default class UIController {
       <div class="data_entry">
         <p class="data_title">Spotify page</p>
         <p class="data_content">
-          <a class="data_link" href="${
-            object['Spotify page']
-          }" target="_blank" rel="noreferrer noopener">Link</a>
+          <a class="data_link" href="${object['Spotify page']}" target="_blank" 
+          rel="noreferrer noopener">
+            <span class="sr-only">External</span>
+              Link
+            <span class="sr-only">to Spotify page of current music item, opens in new tab</span>
+          </a>
         </p>
       </div>
     `;
@@ -505,8 +511,10 @@ export default class UIController {
       </div>
       <div class="data_entry">
         <p class="data_title">Popularity</p>
-        <div class="data_content data_content--background">
-          <span class="sr-only">${object.Popularity}</span>
+        <div class="data_content data_content--background" title="${
+          object.Popularity
+        }/100">
+          <span class="sr-only">${object.Popularity}/100</span>
           <div class="data_content--foreground" style="clip-path: inset(0 ${
             100 - object.Popularity
           }% 0 0);"></div>
@@ -515,9 +523,12 @@ export default class UIController {
       <div class="data_entry">
         <p class="data_title">Spotify page</p>
         <p class="data_content">
-          <a class="data_link" href="${
-            object['Spotify page']
-          }" target="_blank" rel="noreferrer noopener">Link</a>
+          <a class="data_link" href="${object['Spotify page']}" target="_blank" 
+          rel="noreferrer noopener">
+            <span class="sr-only">External</span>
+              Link
+            <span class="sr-only">to Spotify page of current music item, opens in new tab</span>
+          </a>
         </p>
       </div>
     `;
@@ -555,8 +566,10 @@ export default class UIController {
       </div>
       <div class="data_entry">
         <p class="data_title">Popularity</p>
-        <div class="data_content data_content--background">
-          <span class="sr-only">${object.Popularity}</span>
+        <div class="data_content data_content--background" title="${
+          object.Popularity
+        }/100">
+          <span class="sr-only">${object.Popularity}/100</span>
           <div class="data_content--foreground" style="clip-path: inset(0 ${
             100 - object.Popularity
           }% 0 0);"></div>
@@ -569,9 +582,12 @@ export default class UIController {
       <div class="data_entry">
         <p class="data_title">Spotify page</p>
         <p class="data_content">
-          <a class="data_link" href="${
-            object['Spotify page']
-          }" target="_blank" rel="noreferrer noopener">Link</a>
+          <a class="data_link" href="${object['Spotify page']}" target="_blank" 
+          rel="noreferrer noopener">
+            <span class="sr-only">External</span>
+              Link
+            <span class="sr-only">to Spotify page of current music item, opens in new tab</span>
+          </a>
         </p>
       </div>
     `;

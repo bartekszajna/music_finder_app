@@ -11,7 +11,7 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto+Condensed:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto+Condensed:wght@400;700"
       rel="stylesheet"
     />
     <title>Music finder</title>
@@ -35,7 +35,14 @@
         >
       </h1>
       <div class="header_group">
-        <form class="header_search" id="search_form">
+        <form
+          class="header_search"
+          id="search_form"
+          role="combobox"
+          aria-expanded="false"
+          aria-owns="search_list"
+          aria-haspopup="listbox"
+        >
           <label for="search" class="search_label">
             <svg class="search_icon" viewBox="0 0 14 14" fill="none">
               <path
@@ -47,14 +54,23 @@
           <input
             autofocus
             autocomplete="off"
+            aria-autocomplete="list"
+            role="searchbox"
+            aria-controls="search_list"
             id="search"
             type="text"
+            aria-activedescendant=""
             spellcheck="false"
             class="search_input"
             placeholder="Album, artist, track..."
           />
           <button tabindex="-1" type="submit" class="sr-only">Submit</button>
-          <ul class="search_list"></ul>
+          <ul
+            class="search_list"
+            id="search_list"
+            aria-label="list of search suggestions"
+            role="listbox"
+          ></ul>
         </form>
         <div class="header_buttons">
           <button
@@ -114,7 +130,7 @@
     >
       <div class="modal_overflow">
         <div class="modal">
-          <img alt="cover" class="modal_image" />
+          <img alt="cover of the album, artist or song" class="modal_image" />
 
           <div class="audio_container"></div>
 
@@ -130,13 +146,14 @@
                 type="checkbox"
                 id="modal_checkbox"
                 class="modal_checkbox"
+                aria-disabled="false"
               />
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="popup"></div>
+    <div class="popup" aria-live="polite" role="alert"></div>
     <footer class="footer">
       <p class="footer_text">Powered by Spotify API</p>
     </footer>

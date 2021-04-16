@@ -78,6 +78,7 @@ export default class SearchController {
     this.previousInputValue = inputValue;
 
     this.suggestionsListElement.innerText = '';
+    this.formSearchElement.setAttribute('aria-expanded', 'false');
 
     // here comes the whole logic behind fetching all the tiles
     this.showLoader();
@@ -115,9 +116,17 @@ export default class SearchController {
     }
     if (e.code === 'ArrowUp') {
       this.suggestionsListElement.lastElementChild.focus();
+      this.inputSearchElement.setAttribute(
+        'aria-activedescendant',
+        this.suggestionsListElement.lastElementChild.id
+      );
     }
     if (e.code === 'ArrowDown') {
       this.suggestionsListElement.firstElementChild.focus();
+      this.inputSearchElement.setAttribute(
+        'aria-activedescendant',
+        this.suggestionsListElement.firstElementChild.id
+      );
     }
   }
 
@@ -125,6 +134,7 @@ export default class SearchController {
     let inputValue = this.inputSearchElement.value;
     if (!inputValue || inputValue.length < 3) {
       this.suggestionsListElement.innerText = '';
+      this.formSearchElement.setAttribute('aria-expanded', 'false');
       return;
     }
     try {
@@ -135,7 +145,6 @@ export default class SearchController {
         //custom API error {status:400, message:"Only valid bearer authentication supported"}
       }
       const list = this.prepareSuggestionsData(data);
-
       this.renderSuggestionsList(list);
     } catch (errorObject) {
       this.showPopup(

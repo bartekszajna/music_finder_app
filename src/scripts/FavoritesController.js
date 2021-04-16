@@ -112,6 +112,7 @@ export default class FavoritesController {
       e.target !== this.modalLikeButton
     ) {
       e.target.disabled = true;
+      e.target.setAttribute('aria-disabled', 'true');
       this.removeItemAnimation(itemId);
     }
 
@@ -182,13 +183,26 @@ export default class FavoritesController {
   }
 
   showPopup(message) {
-    this.popupElement.classList.remove('popup--visible');
+    //this.popupElement.classList.remove('popup--visible');
     //animation reflow
-    this.popupElement.offsetWidth;
+    //this.popupElement.offsetWidth;
 
     this.popupElement.innerText = `${message}`;
 
-    this.popupElement.classList.add('popup--visible');
+    //this.popupElement.classList.add('popup--visible');
+    this.popupElement.animate(
+      [
+        { opacity: 0, visibility: 'visible', offset: 0 },
+        { opacity: 1, offset: 0.16 },
+        { opacity: 1, offset: 0.84 },
+        { opacity: 0, visibility: 'hidden', offset: 1 },
+      ],
+      {
+        fill: 'forwards',
+        easing: 'ease-in-out',
+        duration: 3000,
+      }
+    );
   }
 
   updateFavoritesQuantity() {
