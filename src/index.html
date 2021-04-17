@@ -54,7 +54,7 @@
           <input
             autofocus
             autocomplete="off"
-            aria-autocomplete="list"
+            aria-autocomplete=""
             role="searchbox"
             aria-controls="search_list"
             id="search"
@@ -78,10 +78,16 @@
             class="header_button button--user"
             aria-expanded="false"
           >
+            <span class="sr-only button_text">
+              <span class="sr-only">Open list of</span>
+              Your favourites
+            </span>
+            <span class="sr-only">music items. Currently</span>
             <span class="button_quantity">0</span>
-            <span class="sr-only button_text">Your favourites</span>
+            <span class="sr-only">saved</span>
           </button>
           <button type="button" class="header_button button--mode">
+            <span class="sr-only">Switch to the </span>
             <span class="sr-only button_text">Dark mode</span>
           </button>
         </div>

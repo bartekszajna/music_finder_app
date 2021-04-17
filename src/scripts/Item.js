@@ -6,8 +6,6 @@ export default class Item {
     this.Name = name;
     this.Id = id;
     this['Spotify page'] = external_url;
-    //this.image = image.length ? image[1].url : false;
     this.Image = image.length ? image[1].url : DefaultImage;
-    //this.Liked = false;
   }
 }

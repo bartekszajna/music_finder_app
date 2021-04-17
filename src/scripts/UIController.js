@@ -9,7 +9,6 @@ export default class UIController {
     this.searchController;
     this.audioController;
     this.suggestionsListElement;
-    //this.listOfItems;
     this.audioElement;
     this.modalAudioButtonElement;
     this.modalLinkElement;
@@ -231,17 +230,18 @@ export default class UIController {
 
       let itemImage = promise.value.imageElement;
       itemImage.classList = 'item_image';
+      itemImage.setAttribute('alt', 'cover of the album, artist or song');
 
       let itemData = document.createElement('div');
       itemData.className = 'item_data';
 
       let itemTitle = document.createElement('p');
       itemTitle.className = 'item_title';
-      itemTitle.innerText = `${promise.value.item.Type}`;
+      itemTitle.innerHTML = `<span class="sr-only">Type of the item:</span> ${promise.value.item.Type}`;
 
       let itemSubtitle = document.createElement('p');
       itemSubtitle.className = 'item_subtitle';
-      itemSubtitle.innerText = `${promise.value.item.Name}`;
+      itemSubtitle.innerHTML = `<span class="sr-only">title:</span> ${promise.value.item.Name}`;
 
       let itemButtons = document.createElement('div');
       itemButtons.className = 'item_buttons';
@@ -251,7 +251,7 @@ export default class UIController {
       itemInfoButton.innerText = 'More info';
       itemInfoButton.setAttribute(
         'aria-label',
-        'Read more information about this item'
+        'Open modal and read more information about this item'
       );
       itemInfoButton.setAttribute('aria-expanded', 'false');
       itemInfoButton.dataset.item = JSON.stringify(promise.value.item);

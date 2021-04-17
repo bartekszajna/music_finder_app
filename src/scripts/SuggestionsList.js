@@ -55,6 +55,7 @@ export default class SuggestionsList {
     // clear it out before every re-rendering
     this.suggestionsListElement.innerText = '';
     this.formSearchElement.setAttribute('aria-expanded', 'true');
+    this.inputSearchElement.setAttribute('aria-autocomplete', 'list');
 
     listToRender.forEach((suggestion, index) => {
       let li = document.createElement('li');

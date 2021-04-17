@@ -1,8 +1,5 @@
 # Music Finder App
 
-(<span style="color: red; font-weight: 700">Note: </span>project in progress - no available live website to test it yet)
-<br>
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/bartekszajna/music_finder_app_design/master/design/mobile_views/light_mode.jpg" width="30%"/>
   <img src="https://raw.githubusercontent.com/bartekszajna/music_finder_app_design/master/design/mobile_views/dark_mode.jpg" width="30%"/>
@@ -21,8 +18,12 @@
 
 - powered by Spotify API
 - dynamically browsing through REST API and displays given resources on screen immediately
+- audio player for available track resources
 - no requirements for user login and authentication
-- endpoints access based on client credentials access token, see their documentation and [Guide](https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow)
-- light/dark mode switch
+- endpoints access based on client credentials access token, if you want to know more - see their documentation and [Guide](https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow)
+- light/dark mode feature complying both to users' preference and their respective OS settings, current choice safely saved on Local Storage
 - user's favourite list of liked items (stored on client side inside of Local Storage)
-- pagination of fetched data and loading more on scroll
+- uses Web Animations API
+- smooth, animated DOM elements removal with FLIP (First-Last-Invert-Play) technique
+- 404.html page prepared for wrong url requests
+- dynamic loading of more data on scroll (with Intersection Observers)

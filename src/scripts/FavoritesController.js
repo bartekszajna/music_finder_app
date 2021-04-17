@@ -187,7 +187,9 @@ export default class FavoritesController {
     //animation reflow
     //this.popupElement.offsetWidth;
 
-    this.popupElement.innerText = `${message}`;
+    this.popupElement.innerHTML = `<span class="sr-only">Item has been</span>
+                                    ${message}
+                                   <span class="sr-only">list</span>`;
 
     //this.popupElement.classList.add('popup--visible');
     this.popupElement.animate(

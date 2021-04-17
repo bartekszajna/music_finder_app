@@ -12,7 +12,7 @@ export default class SearchController {
     this.favoritesButtonElement = document.querySelector('.button--user');
     this.formSearchElement = document.querySelector('.header_search');
     this.inputSearchElement = document.querySelector('.search_input');
-    this.fetchAddress = 'https://warm-temple-70787.herokuapp.com/search?q=';
+    this.fetchAddress = '/search?q=';
     this.loaderElement = document.querySelector('.loader');
 
     this.inputSearchElement.addEventListener(
@@ -54,9 +54,9 @@ export default class SearchController {
     // e.loadOnScroll to denote if this event comes from dynamic loading on scroll
     // we attach this property to event just before dispatching it
     // so its basically the way to transfer data and to inform submissionHandler
-    // what exact submission type was made
+    // what exact submission type was made (from input submission or from scrolling down the page)
     // without that we wouldn't be able to get through below if statements because
-    // in fact, our input value didn't change
+    // in fact, when we scroll our input value doesn't change and we want to fetch new data anyway
     if (this.previousInputValue.trim() !== inputValue) {
       this.fetchedDataOffset = 0;
     }
@@ -79,17 +79,15 @@ export default class SearchController {
 
     this.suggestionsListElement.innerText = '';
     this.formSearchElement.setAttribute('aria-expanded', 'false');
+    this.inputSearchElement.setAttribute('aria-autocomplete', '');
 
-    // here comes the whole logic behind fetching all the tiles
     this.showLoader();
 
     try {
       const data = await this.fetchData(inputValue, this.fetchedDataOffset);
-      // no internet error comes from above line as a TypeError - failed to fetch
 
       if (data.error) {
         throw new Error(data.error.message);
-        //custom API error {status:400, message:"Only valid bearer authentication supported"}
       }
 
       const [listOfItems, totalItemsAmount] = this.prepareItems(data);
@@ -135,14 +133,13 @@ export default class SearchController {
     if (!inputValue || inputValue.length < 3) {
       this.suggestionsListElement.innerText = '';
       this.formSearchElement.setAttribute('aria-expanded', 'false');
+      this.inputSearchElement.setAttribute('aria-autocomplete', '');
       return;
     }
     try {
       const data = await this.fetchData(inputValue, 0);
-      // no internet error comes from above line as a TypeError - failed to fetch
       if (data.error) {
         throw new Error(data.error.message);
-        //custom API error {status:400, message:"Only valid bearer authentication supported"}
       }
       const list = this.prepareSuggestionsData(data);
       this.renderSuggestionsList(list);
