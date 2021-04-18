@@ -6,7 +6,7 @@
   <img src="https://raw.githubusercontent.com/bartekszajna/music_finder_app_design/master/design/mobile_views/light_mode_info_modal.jpg" width="30%"/>
 </p>
 
-### Client-side code of SPA served by Express.js, using Spotify API to asynchronously fetch data and browse through your favourite music. Authorization handled with OAuth framework based on Client Credentials Flow. With [Figma design version](https://github.com/bartekszajna/music_finder_app_design) of the app together those repos make up a front-end part of project.
+### Both client and server side code of SPA served by basic Express.js, using Spotify API to asynchronously fetch data and browse through your favourite music. Authorization handled with OAuth framework based on Client Credentials Flow. With [Figma design version](https://github.com/bartekszajna/music_finder_app_design) of the app together those repos make up a complete web application project.
 
 #
 
@@ -17,6 +17,7 @@
 ## Features:
 
 - powered by Spotify API
+- served by Express.js which is responsible for handling both the OAuth (accessing bearer token) and proxying all user requests
 - dynamically browsing through REST API and displays given resources on screen immediately
 - audio player for available track resources
 - no requirements for user login and authentication

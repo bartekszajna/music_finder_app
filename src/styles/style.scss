@@ -371,7 +371,7 @@ body {
   max-width: 50rem;
   padding: 1.2rem 2rem;
   border-radius: 1rem;
-  background-color: #001a35;
+  background-color: var(--popup-background-color);
   font-size: 1.6rem;
   opacity: 0;
   z-index: 20;
@@ -787,7 +787,7 @@ body {
   }
 
   .item_image {
-    width: 20rem;
+    min-width: 19rem;
     border-bottom-left-radius: 2rem;
     border-top-left-radius: 2rem;
   }
@@ -825,6 +825,11 @@ body {
       font-size: 1.4rem;
     }
   }
+
+  .audio_container {
+    width: 12rem;
+    height: 12rem;
+  }
 }
 
 @media (min-width: 1700px) {
@@ -851,6 +856,12 @@ body {
 
   .modal_data {
     padding: 2.8rem 2.8rem 9rem;
+  }
+
+  .audio_container {
+    width: 15rem;
+    height: 15rem;
+    top: 22%;
   }
 
   .data_title {

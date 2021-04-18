@@ -50,6 +50,8 @@ $error-info-font-weight-light: 700;
 
 $loader-path-stroke-light: rgb(0, 58, 127);
 
+$popup-background-color-light: #074387;
+
 $item-title-color-light: rgba(0, 0, 0, 0.5);
 
 $item-subtitle-color-light: #00276d;
@@ -133,6 +135,8 @@ $audio-path-stroke-light: #00256c;
   --error-info-font-weight: #{$error-info-font-weight-light};
 
   --loader-path-stroke: #{$loader-path-stroke-light};
+
+  --popup-background-color: #{$popup-background-color-light};
 
   --item-info-button-color: #{$item-info-button-color-light};
 

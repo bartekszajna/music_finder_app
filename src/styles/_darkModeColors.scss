@@ -60,6 +60,8 @@ $error-info-font-weight-dark: 500;
 
 $loader-path-stroke-dark: #df4c77;
 
+$popup-background-color-dark: #001a35;
+
 $item-title-color-dark: rgba(255, 255, 255, 0.65);
 
 $item-subtitle-color-dark: #df4c77;
@@ -145,6 +147,8 @@ $audio-path-stroke-dark: #df4c77;
   --error-info-font-weight: #{$error-info-font-weight-dark};
 
   --loader-path-stroke: #{$loader-path-stroke-dark};
+
+  --popup-background-color: #{$popup-background-color-dark};
 
   --item-title-color: #{$item-title-color-dark};
 
